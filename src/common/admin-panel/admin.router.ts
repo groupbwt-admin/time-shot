@@ -8,10 +8,15 @@ const buildAdminRouter = (admin: Object) => {
         cookiePassword: process.env.COOKIE_PASSWORD,
         authenticate: async (email: string, password: string) => {
             const user = await UserEntity.findOne({ email });
+            if (!user) {
+                return null;
+            }
 
-            if (user && await bcrypt.hash(password, process.env.SECRET_KEY)) {
+            const hashedPassword = await bcrypt.hash(password, process.env.SECRET_KEY)
+            if (hashedPassword === user.hashedPassword) {
                 return user;
             }
+
             return null;
         },
     }, null, {
