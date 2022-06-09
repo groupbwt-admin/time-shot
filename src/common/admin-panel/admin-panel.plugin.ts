@@ -12,6 +12,9 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
             UserResource,
         ],
         rootPath: '/admin',
+        branding: {
+            companyName: 'GroupBWT',
+        }
     });
 
     const router = buildAdminRouter(adminBro);
