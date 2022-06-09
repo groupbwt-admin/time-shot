@@ -23,7 +23,7 @@ export class UserEntity extends BaseEntity {
   email: string;
 
   @ApiProperty({ example: 'd1e8a70...8943d082', description: 'Hashed password.' })
-  @Column({ length: 255, nullable: false, select: false })
+  @Column({ length: 255, nullable: false, select: true })
   hashedPassword: string;
 
   @ApiProperty({ example: Role.USER, default: Role.USER, description: "Permission role." })
