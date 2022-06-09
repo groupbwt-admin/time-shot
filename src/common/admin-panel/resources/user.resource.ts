@@ -46,6 +46,9 @@ const UserResource: ResourceWithOptions = {
                     }
                     return request
                 },
+            },
+            delete: {
+                isAccessible: canModifyUser,
             }
         }
     },
