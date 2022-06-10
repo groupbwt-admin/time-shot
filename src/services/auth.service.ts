@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UserService } from '../services/user.service';
 import { JwtService } from '@nestjs/jwt';
-import getHashPassword from 'src/common/utils/get-hashed-password';
+import getHashPassword from '../common/utils/get-hashed-password';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
