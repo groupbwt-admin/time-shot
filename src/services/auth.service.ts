@@ -29,7 +29,11 @@ export class AuthService {
         }
         const payload = { username: user.email, sub: user.id };
         return {
-            access_token: this.jwtService.sign(payload),
+            access_token: this.getAccessToke(payload),
         };
+    }
+
+    getAccessToke(payload: object): string {
+        return this.jwtService.sign(payload);
     }
 }
