@@ -11,7 +11,7 @@ enum Role {
 export class UserEntity {
   @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'UUID.' })
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @ApiProperty({ example: 'user@host.com', description: 'Account email.' })
   @Index("ux_users_email", { unique: true })
