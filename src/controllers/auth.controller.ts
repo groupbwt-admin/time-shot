@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 
-@Controller('api')
+@Controller()
 export class AuthController {
     constructor(
         private authService: AuthService

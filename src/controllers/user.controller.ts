@@ -2,7 +2,8 @@ import { Controller, Get, Logger, Req, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "../common/guards/jwt-auth.guard";
 import { UserEntity } from "../database/entities/user.entity";
 import { UserService } from "../services/user.service";
-@Controller('api/users')
+
+@Controller('users')
 export class UserController {
     public logger = new Logger('UserController');
 

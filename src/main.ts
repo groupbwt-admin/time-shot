@@ -8,6 +8,7 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3000;
   const app = await NestFactory.create(AppModule)
 
+  app.setGlobalPrefix('api');
   await setupAdminPanel(app);
 
   const config = new DocumentBuilder()
