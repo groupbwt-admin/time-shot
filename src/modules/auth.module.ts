@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from "@nestjs/config";
 import { PassportModule } from '@nestjs/passport';
 import { jwtConstants } from '../common/constants/jwt-constants';
 import { JwtStrategy } from '../common/strategies/jwt.strategy';
@@ -9,10 +10,13 @@ import { UsersModule } from './users.module';
 
 @Module({
     imports: [
-        PassportModule.register({ 'defaultStrategy': 'bearer' }),
+        ConfigModule.forRoot({
+            envFilePath: '.env',
+        }),
+        PassportModule.register({ 'defaultStrategy': process.env.DEFAULT_STRATEGY }),
         JwtModule.register({
             secret: jwtConstants.secret,
-            signOptions: { expiresIn: '1d' },
+            signOptions: { expiresIn: `${process.env.EXPIRES_IN}h` },
         }),
         UsersModule,
     ],
