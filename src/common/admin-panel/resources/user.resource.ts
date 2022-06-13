@@ -7,6 +7,10 @@ import canModifyUser from "../permissions/user.permission";
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
     options: {
+        navigation: {
+            icon: "User",
+            name: null,
+        },
         properties: {
             hashedPassword: {
                 isVisible: false,
