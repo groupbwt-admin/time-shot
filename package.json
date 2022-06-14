@@ -21,6 +21,10 @@
     "migration:up": "npm run build && npm run typeorm migration:run",
     "migration:down": "npm run typeorm migration:revert"
   },
+  "engines" : {
+    "npm" : ">=7.10.0",
+    "node" : ">=16.0.0"
+  },
   "dependencies": {
     "@admin-bro/typeorm": "^1.4.0",
     "@nestjs/common": "^8.0.0",
