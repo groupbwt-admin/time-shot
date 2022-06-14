@@ -21,9 +21,9 @@
     "migration:up": "npm run build && npm run typeorm migration:run",
     "migration:down": "npm run typeorm migration:revert"
   },
-  "engines" : {
-    "npm" : ">=7.10.0",
-    "node" : ">=16.0.0"
+  "engines": {
+    "npm": ">=7.10.0",
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@admin-bro/typeorm": "^1.4.0",
@@ -35,6 +35,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.3",
+    "@types/bcrypt": "^5.0.0",
     "admin-bro": "^4.0.1",
     "admin-bro-expressjs": "^2.1.1",
     "admin-bro-typeorm": "^0.1.6-alpha.9",
