@@ -1,7 +1,7 @@
 import { ResourceWithOptions } from "admin-bro";
 import { UserEntity } from "src/database/entities/user.entity";
-import * as bcrypt from 'bcrypt';
 import canModifyUser from "../permissions/user.permission";
+import getHashPassword from "../../utils/get-hashed-password";
 
 
 const UserResource: ResourceWithOptions = {
@@ -25,9 +25,7 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await bcrypt.hash(
-                                request.payload.password, process.env.SECRET_KEY
-                            )
+                            hashedPassword: await getHashPassword(request.payload.password)
                         };
                     }
                     return request;
@@ -39,9 +37,7 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await bcrypt.hash(
-                                request.payload.password, process.env.SECRET_KEY
-                            )
+                            hashedPassword: await getHashPassword(request.payload.password)
                         };
                     }
                     return request;
