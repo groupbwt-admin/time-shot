@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import getHashPassword from '../common/utils/get-hashed-password';
 import { UserService } from './user.service';
+import { LoginUserDto } from '../common/dtos/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,12 +23,12 @@ export class AuthService {
         return null;
     }
 
-    async login(user: any) {
+    async login(user: LoginUserDto) {
         const findUser = await this.validateUser(user.email, user.password);
         if (!findUser) {
             return { 'error': 'Wrong email and/or password' }
         }
-        const payload = { username: user.email, sub: user.id };
+        const payload = { username: findUser.email, sub: findUser.id };
         return {
             access_token: this.jwtService.sign(payload),
         };
