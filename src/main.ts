@@ -17,7 +17,7 @@ async function bootstrap() {
     .setVersion('0.0.1')
     .build()
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/api/docs', app, document)
+  SwaggerModule.setup('/docs', app, document)
 
   await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`))
 }
