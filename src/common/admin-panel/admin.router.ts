@@ -11,7 +11,6 @@ const buildAdminRouter = (admin: Object) => {
             if (!user) {
                 return null;
             }
-
             const hashedPassword = await bcrypt.hash(password, process.env.SECRET_KEY)
             if (hashedPassword === user.hashedPassword) {
                 return user;

@@ -3,6 +3,8 @@ import { INestApplication } from "@nestjs/common";
 import AdminBro from "admin-bro";
 import buildAdminRouter from "./admin.router";
 import UserResource from "./resources/user.resource";
+import LocationResource from './resources/locations.resource';
+import { DASHBOARD } from "./dashboard";
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
     AdminBro.registerAdapter({ Database, Resource });
@@ -10,8 +12,10 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
     const adminBro = new AdminBro({
         resources: [
             UserResource,
+            LocationResource,
         ],
         rootPath: '/admin',
+        dashboard: { component: DASHBOARD },
         branding: {
             companyName: 'GroupBWT',
         }
