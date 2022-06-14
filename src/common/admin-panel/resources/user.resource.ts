@@ -18,7 +18,7 @@ const UserResource: ResourceWithOptions = {
             password: {
                 type: 'string',
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false,
+                    list: false, edit: false, filter: false, show: false,
                 },
             },
         },
@@ -52,7 +52,7 @@ const UserResource: ResourceWithOptions = {
                 },
             },
             delete: {
-                isAccessible: canModifyUser,
+                isAccessible: false,
             }
         }
     },

@@ -1,12 +1,9 @@
 import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 const Dashboard = (props) => {
-  const location = props.record.params
   return (
-    <div>
-      <h1>{JSON.stringify(location)}</h1>
-    </div>
+    <Route path="/admin"></Route>
   )
 }
-
 export default Dashboard

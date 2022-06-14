@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\common",
+    "\\src\\common\\admin-panel",
+    "\\src\\common\\admin-panel\\components",
+    "\\src\\common\\admin-panel\\handlers"
+  ],
+  "SelectedNode": "\\src\\common\\admin-panel\\handlers\\activate.location.ts",
+  "PreviewInSolutionExplorer": false
+}
