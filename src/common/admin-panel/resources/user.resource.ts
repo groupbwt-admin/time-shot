@@ -7,6 +7,10 @@ import getHashPassword from "../../utils/get-hashed-password";
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
     options: {
+        navigation: {
+            icon: "User",
+            name: null,
+        },
         properties: {
             hashedPassword: {
                 isVisible: false
