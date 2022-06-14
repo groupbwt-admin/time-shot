@@ -8,8 +8,9 @@ export class UserController {
     public logger = new Logger('UserController');
 
     constructor(
-        private readonly userService: UserService,
-    ) { }
+        private readonly userService: UserService
+    ) {
+    }
 
     @UseGuards(JwtAuthGuard)
     @Get()

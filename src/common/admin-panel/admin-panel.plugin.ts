@@ -9,11 +9,11 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
 
     const adminBro = new AdminBro({
         resources: [
-            UserResource,
+            UserResource
         ],
         rootPath: '/admin',
         branding: {
-            companyName: 'GroupBWT',
+            companyName: 'GroupBWT'
         }
     });
 

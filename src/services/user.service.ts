@@ -1,4 +1,4 @@
-import { Injectable, Logger, } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "../common/dtos/create-user.dto";
@@ -9,12 +9,13 @@ import { UserEntity } from "../database/entities/user.entity";
 @Injectable()
 export class UserService {
 
-    public logger = new Logger('UserService')
+    public logger = new Logger('UserService');
 
     constructor(
         @InjectRepository(UserEntity)
-        private userRepository: Repository<UserEntity>,
-    ) { }
+        private userRepository: Repository<UserEntity>
+    ) {
+    }
 
     async create(dto: CreateUserDto): Promise<UserEntity> {
         const password = dto.password;

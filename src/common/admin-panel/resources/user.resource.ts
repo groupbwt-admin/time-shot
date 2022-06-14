@@ -9,14 +9,14 @@ const UserResource: ResourceWithOptions = {
     options: {
         properties: {
             hashedPassword: {
-                isVisible: false,
+                isVisible: false
             },
             password: {
                 type: 'string',
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false,
-                },
-            },
+                    list: false, edit: true, filter: false, show: false
+                }
+            }
         },
         actions: {
             edit: {
@@ -27,11 +27,11 @@ const UserResource: ResourceWithOptions = {
                             ...request.payload,
                             hashedPassword: await bcrypt.hash(
                                 request.payload.password, process.env.SECRET_KEY
-                            ),
-                        }
+                            )
+                        };
                     }
-                    return request
-                },
+                    return request;
+                }
             },
             new: {
                 isAccessible: canModifyUser,
@@ -41,17 +41,17 @@ const UserResource: ResourceWithOptions = {
                             ...request.payload,
                             hashedPassword: await bcrypt.hash(
                                 request.payload.password, process.env.SECRET_KEY
-                            ),
-                        }
+                            )
+                        };
                     }
-                    return request
-                },
+                    return request;
+                }
             },
             delete: {
-                isAccessible: canModifyUser,
+                isAccessible: canModifyUser
             }
         }
-    },
+    }
 };
 
 export default UserResource;

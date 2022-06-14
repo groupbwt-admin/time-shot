@@ -1,17 +1,16 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { randomUUID } from "crypto";
 import { Role } from "../common/enums/role.enum";
 import getHashPassword from "../common/utils/get-hashed-password";
 import { UserEntity } from "../database/entities/user.entity";
-import { UserService } from "./user.service"
+import { UserService } from "./user.service";
 
 describe('UserService', () => {
     let service: UserService;
 
     const mockUserRepository = {
         create: jest.fn().mockImplementation(dto => dto),
-        save: jest.fn().mockImplementation(user => Promise.resolve({ ...user })),
+        save: jest.fn().mockImplementation(user => Promise.resolve({ ...user }))
     };
 
     beforeEach(async () => {
@@ -20,9 +19,9 @@ describe('UserService', () => {
                 UserService,
                 {
                     provide: getRepositoryToken(UserEntity),
-                    useValue: mockUserRepository,
-                },
-            ],
+                    useValue: mockUserRepository
+                }
+            ]
         }).compile();
 
         service = module.get<UserService>(UserService);
@@ -44,5 +43,5 @@ describe('UserService', () => {
             hashedPassword: await getHashPassword('user'),
             role: Role.USER
         });
-    })
-})
+    });
+});

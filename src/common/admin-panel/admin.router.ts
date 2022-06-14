@@ -1,10 +1,10 @@
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from "src/database/entities/user.entity";
-import * as AdminBroExpress from 'admin-bro-expressjs';
+import { buildAuthenticatedRouter } from 'admin-bro-expressjs';
 import AdminBro from "admin-bro";
 
 const buildAdminRouter = (admin: AdminBro) => {
-    const router = AdminBroExpress.buildAuthenticatedRouter(admin, {
+    const router = buildAuthenticatedRouter(admin, {
         cookieName: process.env.COOKIE_NAME,
         cookiePassword: process.env.COOKIE_PASSWORD,
         authenticate: async (email: string, password: string) => {
@@ -13,16 +13,16 @@ const buildAdminRouter = (admin: AdminBro) => {
                 return null;
             }
 
-            const hashedPassword = await bcrypt.hash(password, process.env.SECRET_KEY)
+            const hashedPassword = await bcrypt.hash(password, process.env.SECRET_KEY);
             if (hashedPassword === user.hashedPassword) {
                 return user;
             }
 
             return null;
-        },
+        }
     }, null, {
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: true
     });
     return router;
 };

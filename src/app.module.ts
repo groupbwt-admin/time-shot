@@ -7,15 +7,16 @@ import { AuthModule } from './modules/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.env'
-    }),
-    TypeOrmModule.forRoot(),
-    UsersModule,
-    AuthModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({
+            envFilePath: '.env'
+        }),
+        TypeOrmModule.forRoot(),
+        UsersModule,
+        AuthModule
+    ],
+    controllers: [AppController],
+    providers: [AppService]
 })
-export class AppModule { }
+export class AppModule {
+}
