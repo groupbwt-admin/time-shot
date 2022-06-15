@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm/dist/interfaces/typeorm-options.interface";
-const { join } = require("path");
+import { join } from "path";
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
     type: "mysql",
@@ -15,7 +15,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
         charset: 'utf8mb4_unicode_ci'
     },
     cli: {
-        migrationsDir: __dirname + '/../database/migrations',
+        migrationsDir: join(__dirname, '..', 'database', 'migrations')
     },
-    logging: true,
+    logging: true
 };
