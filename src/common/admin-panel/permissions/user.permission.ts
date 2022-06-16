@@ -1,4 +1,4 @@
-const canModifyUser = (currentAdmin) => {
+const canGrantPermission = (currentAdmin) => {
     return (
         currentAdmin.currentAdmin &&
         currentAdmin.currentAdmin.role === 'admin' ||
@@ -6,4 +6,4 @@ const canModifyUser = (currentAdmin) => {
     )
 };
 
-export default canModifyUser;
+export default canGrantPermission;
