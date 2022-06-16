@@ -33,7 +33,7 @@ const activateLocation = async (request, response, context) => {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
-      maxAge: Number(process.env.EXPIRES_IN) * 60, // convert hours in seconds
+      maxAge: Number(process.env.EXPIRES_IN) * 60 * 60 * 1000, // convert hours in milliseconds
     }
   )
   return {
