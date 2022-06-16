@@ -2,7 +2,9 @@ import AdminBro, { ResourceWithOptions } from "admin-bro";
 import { LocationEntity } from "../../../database/entities/location.entity";
 import activateLocation from "../handlers/activate.location";
 import canActivateLocation from "../permissions/location.activate.permission";
-import canGrantPermission from "../permissions/user.permission";
+import canModifyLocation from "../permissions/location.common.permission";
+import validationCreateLocation from "../validations/location/location-create.validation";
+import validationEditLocation from "../validations/location/location-edit.validation";
 
 const LocationResource: ResourceWithOptions = {
   resource: LocationEntity,
@@ -29,15 +31,17 @@ const LocationResource: ResourceWithOptions = {
         handler: activateLocation,
         component: AdminBro.bundle('../components/activated-locations'),
       },
-      show: {
-        isAccessible: canGrantPermission,
-      },
       new: {
-        isAccessible: canGrantPermission,
+        isAccessible: canModifyLocation,
+        before: validationCreateLocation,
       },
       edit: {
-        isAccessible: canGrantPermission,
+        isAccessible: canModifyLocation,
+        before: validationEditLocation,
       },
+      delete: {
+        isAccessible: canModifyLocation
+      }
     }
   },
 };
