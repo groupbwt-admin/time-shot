@@ -15,7 +15,7 @@ const LocationResource: ResourceWithOptions = {
       },
       isActive: {
         isVisible: {
-          edit: false,
+          edit: false, list: true, show: true, filter: true,
         },
       },
     },
