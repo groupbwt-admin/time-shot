@@ -1,7 +1,7 @@
 import { ResourceWithOptions } from "admin-bro";
 import { UserEntity } from "src/database/entities/user.entity";
 import * as bcrypt from 'bcrypt';
-import canModifyUser from "../permissions/user.permission";
+import canGrantPermission from "../permissions/user.permission";
 
 
 const UserResource: ResourceWithOptions = {
@@ -20,7 +20,7 @@ const UserResource: ResourceWithOptions = {
         },
         actions: {
             edit: {
-                isAccessible: canModifyUser,
+                isAccessible: canGrantPermission,
                 before: async (request) => {
                     if (request.payload.password) {
                         request.payload = {
@@ -34,7 +34,7 @@ const UserResource: ResourceWithOptions = {
                 },
             },
             new: {
-                isAccessible: canModifyUser,
+                isAccessible: canGrantPermission,
                 before: async (request) => {
                     if (request.payload.password) {
                         request.payload = {
@@ -48,7 +48,7 @@ const UserResource: ResourceWithOptions = {
                 },
             },
             delete: {
-                isAccessible: canModifyUser,
+                isAccessible: canGrantPermission,
             }
         }
     },
