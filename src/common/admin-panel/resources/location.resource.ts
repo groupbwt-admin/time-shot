@@ -24,6 +24,7 @@ const LocationResource: ResourceWithOptions = {
     actions: {
       activateLocation: {
         isAccessible: canActivateLocation,
+        icon: 'Activate',
         actionType: 'record',
         handler: activateLocation,
         component: AdminBro.bundle('../components/activated-locations'),
