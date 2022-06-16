@@ -32,7 +32,8 @@ const activateLocation = async (request, response, context) => {
     {
       httpOnly: true,
       secure: true,
-      maxAge: 1000000
+      sameSite: 'strict',
+      maxAge: 1000000,
     }
   )
   return {
