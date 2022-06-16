@@ -1,9 +1,10 @@
 const canActivateLocation = (props) => {
   return (
     props.currentAdmin &&
-    !props.record.params.isActive &&
-    props.currentAdmin.role === 'admin' ||
-    props.currentAdmin.role === 'superadmin'
+    !props.record.params.isActive && (
+      props.currentAdmin.role === 'admin' ||
+      props.currentAdmin.role === 'superadmin'
+    )
   )
 };
 
