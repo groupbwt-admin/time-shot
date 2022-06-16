@@ -5,6 +5,9 @@ import { createBrowserHistory } from "history";
 
 const Dashboard = (props) => {
   const { logoutPath } = props.record;
+  if (!logoutPath) {
+    return null;
+  }
   const withRefresh = createBrowserHistory({ forceRefresh: true });
   withRefresh.push({
     pathname: logoutPath,
