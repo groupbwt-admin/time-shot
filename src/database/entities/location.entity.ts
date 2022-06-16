@@ -19,7 +19,7 @@ export class LocationEntity extends BaseEntity {
   id: string;
 
   @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174121', description: 'UUID creator.' })
-  @Index("ux_locations_creator", { unique: true })
+  @Index("ux_locations_creator")
   @ManyToOne(() => UserEntity)
   creator: string;
 
