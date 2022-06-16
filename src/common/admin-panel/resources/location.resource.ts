@@ -7,7 +7,16 @@ import canGrantPermission from "../permissions/user.permission";
 const LocationResource: ResourceWithOptions = {
   resource: LocationEntity,
   options: {
-    listProperties: ['name', 'creatorId', 'isActive'],
+    properties: {
+      deletedAt: {
+        isVisible: false,
+      },
+      isActive: {
+        isVisible: {
+          edit: false,
+        },
+      },
+    },
     navigation: {
       icon: "Location",
       name: null,
@@ -27,9 +36,6 @@ const LocationResource: ResourceWithOptions = {
       },
       edit: {
         isAccessible: canGrantPermission,
-      },
-      delete: {
-        isAccessible: false
       },
     }
   },
