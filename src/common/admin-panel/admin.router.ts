@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from "src/database/entities/user.entity";
+import { UserEntity } from 'src/database/entities/user.entity';
 import * as AdminBroExpress from 'admin-bro-expressjs';
 
 const buildAdminRouter = (admin: Object) => {

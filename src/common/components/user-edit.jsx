@@ -11,7 +11,7 @@ import LayoutElementRenderer from 'admin-bro/src/frontend/components/actions/uti
 
 const CustomEdit = (props) => {
   const { record: initialRecord, resource, action } = props;
-  resource.editProperties = resource.editProperties.filter(prop => prop.name !== "email");
+  resource.editProperties = resource.editProperties.filter(prop => prop.name !== 'email');
 
   const {
     record,
@@ -41,11 +41,11 @@ const CustomEdit = (props) => {
 
   return (
     <Box
-      as="form"
+      as='form'
       onSubmit={submit}
       flex
       flexGrow={1}
-      flexDirection="column"
+      flexDirection='column'
     >
       <DrawerContent>
         {action?.showInDrawer ? <ActionHeader {...props} /> : null}
@@ -54,14 +54,14 @@ const CustomEdit = (props) => {
             key={i}
             layoutElement={layoutElement}
             {...props}
-            where="edit"
+            where='edit'
             onChange={handleChange}
             record={record}
           />
         )) : resource.editProperties.map(property => (
           <PropertyType
             key={property.propertyPath}
-            where="edit"
+            where='edit'
             onChange={handleChange}
             property={property}
             resource={resource}
@@ -70,8 +70,8 @@ const CustomEdit = (props) => {
         ))}
       </DrawerContent>
       <DrawerFooter>
-        <Button variant="primary" size="lg" type="submit" data-testid="button-save">
-          {loading ? (<Icon icon="Fade" spin />) : null}
+        <Button variant='primary' size='lg' type='submit' data-testid='button-save'>
+          {loading ? (<Icon icon='Fade' spin />) : null}
           {translateButton('save', resource.id)}
         </Button>
       </DrawerFooter>

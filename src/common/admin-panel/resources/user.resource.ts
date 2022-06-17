@@ -1,52 +1,52 @@
-import { ResourceWithOptions, ValidationError } from "admin-bro";
-import { UserEntity } from "src/database/entities/user.entity";
-import * as bcrypt from "bcrypt";
-import canModifyUser from "../permissions/user.permission";
-import  { perPageLimit } from "../../constants/adminjs-constants";
-import AdminBro from "admin-bro";
-import { Role } from "../../enums/role.enum"
+import { ResourceWithOptions, ValidationError } from 'admin-bro';
+import { UserEntity } from 'src/database/entities/user.entity';
+import * as bcrypt from 'bcrypt';
+import canModifyUser from '../permissions/user.permission';
+import  { perPageLimit } from '../../constants/adminjs-constants';
+import AdminBro from 'admin-bro';
+import { Role } from '../../enums/role.enum';
 
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
     options: {
         navigation: {
-            name: "Time tracking"
+            name: 'Time tracking'
         },
         properties: {
             id: {
-                type: "string",
+                type: 'string',
                 isVisible: {
                     list: false, edit: false, filter: false, show: false
                 }
             },
             email: {
-                type: "string",
+                type: 'string',
                 isVisible: {
                     list: true, edit: true, filter: true, show: true
                 },
                 isTitle: true
             },
             hashedPassword: {
-                type: "string",
+                type: 'string',
                 isVisible: {
-                    list: false, edit: false, filter: false, show: false,
+                    list: false, edit: false, filter: false, show: false
                 }
             },
             password: {
-                type: "password",
+                type: 'password',
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false,
+                    list: false, edit: true, filter: false, show: false
                 }
             },
             duplicatePassword: {
-                type: "password",
+                type: 'password',
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false,
+                    list: false, edit: true, filter: false, show: false
                 }
             },
             role: {
                 isVisible: {
-                    list: true, edit: true, filter: true, show: false,
+                    list: true, edit: true, filter: true, show: false
                 },
                 custom: {
                     user: Role.USER,
@@ -55,9 +55,9 @@ const UserResource: ResourceWithOptions = {
                 }
             },
             deletedAt: {
-                type: "date",
+                type: 'date',
                 isVisible: {
-                    list: false, edit: true, filter: true, show: true,
+                    list: false, edit: true, filter: true, show: true
                 }
             },
         },
@@ -68,7 +68,7 @@ const UserResource: ResourceWithOptions = {
                     request.payload.email = null;
                     if (request.payload.password) {
                         if (request.payload.password !== request.payload.duplicatePassword) {
-                            const message = "Password and duplicate password must be the same.";
+                            const message = 'Password and duplicate password must be the same.';
                             throw new ValidationError({name: {message: message}}, {message: message});
                         }
                         request.payload = {
@@ -108,15 +108,15 @@ const UserResource: ResourceWithOptions = {
                 before: async (request, context) => {
                     request.payload.deletedAt = null;
                     if (!request.payload.email ) {
-                        const message = "Email is required.";
+                        const message = 'Email is required.';
                         throw new ValidationError({name: {message: message}}, {message: message});
                     }
                     if (!request.payload.password || !request.payload.duplicatePassword) {
-                        const message = "Password and duplicate are required.";
+                        const message = 'Password and duplicate are required.';
                         throw new ValidationError({name: {message: message}}, {message: message});
                     } 
                     if (request.payload.password !== request.payload.duplicatePassword) {
-                        const message = "Password and duplicate password must be the same.";
+                        const message = 'Password and duplicate password must be the same.';
                         throw new ValidationError({name: {message: message}}, {message: message});
                     }
                     if (!request.payload.role) {
