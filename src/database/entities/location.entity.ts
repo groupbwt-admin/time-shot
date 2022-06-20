@@ -27,10 +27,6 @@ export class LocationEntity extends BaseEntity {
   @Column({ length: 256, unique: true })
   name: string;
 
-  @ApiProperty({ example: true, description: "Is active location" })
-  @Column({ type: "bool", default: false })
-  isActive: boolean;
-
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date;
 
