@@ -1,14 +1,16 @@
 import {
-    Entity,
+    BaseEntity,
     Column,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
     CreateDateColumn,
     DeleteDateColumn,
-    BaseEntity,
+    Entity,
     Index,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { TimeShotEntity } from "./time-shot.entity";
 
 @Entity('locations')
 export class LocationEntity extends BaseEntity {
@@ -37,4 +39,10 @@ export class LocationEntity extends BaseEntity {
 
     @DeleteDateColumn({ type: "timestamp", default: null })
     deletedAt?: Date;
+
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationStart)
+    startTimeShots: TimeShotEntity[];
+
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationEnd)
+    endTimeShots: TimeShotEntity[];
 }
