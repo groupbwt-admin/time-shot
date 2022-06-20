@@ -26,10 +26,11 @@ const UserResource: ResourceWithOptions = {
                 isVisible: {
                     list: true, edit: true, filter: true, show: true
                 },
-                isTitle: true
+                isTitle: true,
+                isDisabled: true
             },
             hashedPassword: {
-                type: 'string',
+                type: 'password',
                 isVisible: {
                     list: false, edit: false, filter: false, show: false
                 }
@@ -85,7 +86,7 @@ const UserResource: ResourceWithOptions = {
                     }
                     return request;
                 },
-                component: AdminBro.bundle('../../components/user-edit')
+                // component: AdminBro.bundle('../../components/user-edit')
             }, 
             list: {
                 before: async (request, context) => {
