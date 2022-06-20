@@ -4,6 +4,7 @@ import AdminBro from "admin-bro";
 import buildAdminRouter from "./admin.router";
 import UserResource from "./resources/user.resource";
 import LocationResource from "./resources/location.resource";
+import TimeShotResource from "./resources/time-shot.resource";
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
     AdminBro.registerAdapter({ Database, Resource });
@@ -12,10 +13,11 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         resources: [
             UserResource,
             LocationResource,
+            TimeShotResource
         ],
         rootPath: '/admin',
         branding: {
-            companyName: 'GroupBWT',
+            companyName: 'GroupBWT'
         }
     });
 
