@@ -1,16 +1,12 @@
 import { ResourceWithOptions } from "admin-bro";
 import { UserEntity } from "src/database/entities/user.entity";
 import * as bcrypt from 'bcrypt';
-import canModifyUser from "../permissions/user.permission";
+import canGrantPermission from "../permissions/user.permission";
 
 
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
     options: {
-        navigation: {
-            icon: "User",
-            name: null,
-        },
         properties: {
             hashedPassword: {
                 isVisible: false,
@@ -18,13 +14,13 @@ const UserResource: ResourceWithOptions = {
             password: {
                 type: 'string',
                 isVisible: {
-                    list: false, edit: false, filter: false, show: false,
+                    list: false, edit: true, filter: false, show: false,
                 },
             },
         },
         actions: {
             edit: {
-                isAccessible: canModifyUser,
+                isAccessible: canGrantPermission,
                 before: async (request) => {
                     if (request.payload.password) {
                         request.payload = {
@@ -38,7 +34,7 @@ const UserResource: ResourceWithOptions = {
                 },
             },
             new: {
-                isAccessible: canModifyUser,
+                isAccessible: canGrantPermission,
                 before: async (request) => {
                     if (request.payload.password) {
                         request.payload = {
@@ -52,7 +48,7 @@ const UserResource: ResourceWithOptions = {
                 },
             },
             delete: {
-                isAccessible: false,
+                isAccessible: canGrantPermission,
             }
         }
     },

@@ -1,37 +1,48 @@
 import { LocationEntity } from "../../../database/entities/location.entity";
 import { JwtService } from "@nestjs/jwt";
+import { jwtConstants } from "../../constants/jwt-constants";
 
-const activateLocatin = async (request, response, context) => {
-  const jwtService = new JwtService();
+const jwtService = new JwtService();
+
+const activateLocation = async (request, response, context) => {
   const location = context.record;
   const useLocation = await LocationEntity.findOne(location.params.id);
+  const { logoutPath } = context._admin.options;
 
-  const payload = {
-    username: location.name,
-    activatorId: context.currentAdmin.id,
-    sub: location.id
-  }
-
-  if (Boolean(useLocation.isActive.readInt8())) {
-    return {
-      record: {
-        access_token: jwtService.sign(payload),
-        ...location.toJSON(context.currentAdmin)
-      },
-    }
-  };
-
-  useLocation.isActive = 1;
+  useLocation.isActive = true;
   await LocationEntity.save(useLocation)
   location.param = useLocation;
 
+  const payload = {
+    locationId: useLocation.id,
+    activatorId: context.currentAdmin.id,
+  };
+
+  const accessToken = jwtService.sign(
+    payload,
+    {
+      secret: jwtConstants.secret,
+      expiresIn: `${process.env.EXPIRES_IN}h`
+    },
+  );
+
+  response.cookie(
+    'accessToken',
+    accessToken,
+    {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: Number(process.env.EXPIRES_IN) * 60 * 60 * 1000, // convert hours in milliseconds
+    }
+  )
   return {
     record: {
-      access_token: jwtService.sign(payload),
-      ...location.toJSON(context.currentAdmin)
-    },
+      accessToken,
+      logoutPath,
+      ...location.toJSON(context.currentAdmin),
+    }
   }
+};
 
-}
-
-export default activateLocatin;
+export default activateLocation;

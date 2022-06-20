@@ -1,16 +1,22 @@
 import React from 'react';
-import { H1 } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
 const Dashboard = (props) => {
-  const location = props.record.params;
+  const { logoutPath } = props.record;
+  if (!logoutPath) {
+    return null;
+  }
+  const withRefresh = createBrowserHistory({ forceRefresh: true });
+  withRefresh.push({
+    pathname: logoutPath,
+  });
+
   return (
-    <div>
-      <h1>ID: {location.id.toString()}</h1>
-      <h1>Creator Email: {location.creator_email.toString()}</h1>
-      <h1>Name: {location.name.toString()}</h1>
-      <h1>Is Active: {Boolean(location.isActive.data[0]).toString()}</h1>
-      <h1>Access Token: {props.access_token.toString()}</h1>
-    </div>
-  )
-}
-export default Dashboard
+    <Redirect to={{ pathname: logoutPath }} />
+  );
+
+};
+
+export default withRouter(Dashboard);
