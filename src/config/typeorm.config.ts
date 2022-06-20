@@ -4,7 +4,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     type: 'mysql',
     host: process.env.TYPEORM_HOST,
     port: parseInt(process.env.TYPEORM_PORT, 10),
-    username: 'root',
+    username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE,
     entities: [__dirname + '/../database/entities/*.entity.{js,ts}'],
