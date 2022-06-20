@@ -1,7 +1,7 @@
 import { ResourceWithOptions } from "admin-bro";
 import { UserEntity } from "src/database/entities/user.entity";
+import * as bcrypt from 'bcrypt';
 import canModifyUser from "../permissions/user.permission";
-import getHashPassword from "../../utils/get-hashed-password";
 
 
 const UserResource: ResourceWithOptions = {
@@ -13,14 +13,14 @@ const UserResource: ResourceWithOptions = {
         },
         properties: {
             hashedPassword: {
-                isVisible: false
+                isVisible: false,
             },
             password: {
                 type: 'string',
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false
-                }
-            }
+                    list: false, edit: false, filter: false, show: false,
+                },
+            },
         },
         actions: {
             edit: {
@@ -29,11 +29,13 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await getHashPassword(request.payload.password)
-                        };
+                            hashedPassword: await bcrypt.hash(
+                                request.payload.password, process.env.SECRET_KEY
+                            ),
+                        }
                     }
-                    return request;
-                }
+                    return request
+                },
             },
             new: {
                 isAccessible: canModifyUser,
@@ -41,17 +43,19 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await getHashPassword(request.payload.password)
-                        };
+                            hashedPassword: await bcrypt.hash(
+                                request.payload.password, process.env.SECRET_KEY
+                            ),
+                        }
                     }
-                    return request;
-                }
+                    return request
+                },
             },
             delete: {
-                isAccessible: canModifyUser
+                isAccessible: false,
             }
         }
-    }
+    },
 };
 
 export default UserResource;

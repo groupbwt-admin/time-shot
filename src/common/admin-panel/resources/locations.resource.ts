@@ -17,6 +17,9 @@ const LocationResource: ResourceWithOptions = {
         handler: activateLocatin,
         component: AdminBro.bundle('../components/activated-locations'),
       },
+      delete: {
+        isAccessible: false
+      },
     }
   },
 
