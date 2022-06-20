@@ -7,7 +7,7 @@ import { AuthModule } from './modules/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocationModule } from './modules/location.module';
 
-import { typeOrmConfig } from "./config/typeorm.config";
+import { getTypeOrmModuleOptions } from "./config/typeorm.config";
 
 @Module({
     imports: [
@@ -15,7 +15,7 @@ import { typeOrmConfig } from "./config/typeorm.config";
             envFilePath: '.env',
             isGlobal: true,
         }),
-        TypeOrmModule.forRoot(typeOrmConfig),
+        TypeOrmModule.forRoot(getTypeOrmModuleOptions()),
         UsersModule,
         AuthModule,
         LocationModule
