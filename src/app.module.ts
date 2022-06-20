@@ -8,12 +8,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocationModule } from './modules/location.module';
 
 import { getTypeOrmModuleOptions } from "./config/typeorm.config";
+import { CreateAccountCommand } from "./commands/create-account.command";
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: '.env',
-            isGlobal: true,
+            isGlobal: true
         }),
         TypeOrmModule.forRoot(getTypeOrmModuleOptions()),
         UsersModule,
@@ -21,7 +22,7 @@ import { getTypeOrmModuleOptions } from "./config/typeorm.config";
         LocationModule
     ],
     controllers: [AppController],
-    providers: [AppService]
+    providers: [AppService, CreateAccountCommand]
 })
 export class AppModule {
 }
