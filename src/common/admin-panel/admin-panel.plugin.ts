@@ -19,16 +19,8 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         branding: {
             companyName: 'GroupBWT'
         },
-        pages: {
-            'tracker': {
-                component: AdminJS.bundle('components/some-stats'),
-                icon: 'Purchase',
-                handler: async (request, response, context) => {
-                    return {
-                        text: 'I am fetched from the backend'
-                    };
-                }
-            }
+        dashboard: {
+            component: AdminJS.bundle('components/time-tracker'),
         }
     });
 
