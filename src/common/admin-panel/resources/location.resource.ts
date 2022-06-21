@@ -15,6 +15,11 @@ const LocationResource: ResourceWithOptions = {
       deletedAt: {
         isVisible: false,
       },
+      creatorId: {
+        isVisible: {
+          edit: false, show: true, list: true,
+        },
+      },
     },
     navigation: {
       icon: "Location",
