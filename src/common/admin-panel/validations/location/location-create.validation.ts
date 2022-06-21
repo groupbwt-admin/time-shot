@@ -2,15 +2,7 @@ import { ValidationError } from "admin-bro";
 import { LocationEntity } from "../../../../database/entities/location.entity";
 
 const validationCreateLocation = async (request) => {
-  const { name, creatorId } = request.payload;
-  const { id } = request.session.adminUser;
-  if (!(creatorId === id)) {
-    throw new ValidationError({
-      creatorId: {
-        message: 'You must select your email!'
-      }
-    });
-  };
+  const { name } = request.payload;
   if (await LocationEntity.findOne({ where: { name: name } })) {
     throw new ValidationError({
       name: {
@@ -18,6 +10,8 @@ const validationCreateLocation = async (request) => {
       }
     });
   }
+  const { id } = request.session.adminUser;
+  request.payload.creatorId = id;
   return request
 };
 
