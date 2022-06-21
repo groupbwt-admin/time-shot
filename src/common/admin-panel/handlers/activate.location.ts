@@ -9,8 +9,6 @@ const activateLocation = async (request, response, context) => {
   const useLocation = await LocationEntity.findOne(location.params.id);
   const { logoutPath } = context._admin.options;
 
-  useLocation.isActive = true;
-  await LocationEntity.save(useLocation)
   location.param = useLocation;
 
   const payload = {

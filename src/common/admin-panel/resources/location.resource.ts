@@ -6,6 +6,8 @@ import canModifyLocation from "../permissions/location.common.permission";
 import validationCreateLocation from "../validations/location/location-create.validation";
 import validationEditLocation from "../validations/location/location-edit.validation";
 import hasAdminPermission from "../permissions/has-admin.permission";
+import listLocation from "../handlers/list.location";
+import showLocation from "../handlers/show.location";
 
 const LocationResource: ResourceWithOptions = {
   resource: LocationEntity,
@@ -13,11 +15,6 @@ const LocationResource: ResourceWithOptions = {
     properties: {
       deletedAt: {
         isVisible: false,
-      },
-      isActive: {
-        isVisible: {
-          edit: false, list: true, show: true, filter: true,
-        },
       },
     },
     navigation: {
@@ -41,13 +38,19 @@ const LocationResource: ResourceWithOptions = {
         before: validationEditLocation,
       },
       delete: {
-        isAccessible: canModifyLocation
+        isAccessible: hasAdminPermission,
       },
-      show: { isAccessible: hasAdminPermission },
-      list: { isAccessible: hasAdminPermission },
       bulkDelete: { isAccessible: hasAdminPermission },
-      search: { isAccessible: hasAdminPermission }
-    }
+      search: { isAccessible: hasAdminPermission },
+      list: {
+        isAccessible: hasAdminPermission,
+        after: listLocation,
+      },
+      show: {
+        isAccessible: hasAdminPermission,
+        after: showLocation,
+      },
+    },
   },
 };
 
