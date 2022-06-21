@@ -1,4 +1,4 @@
-import { ValidationError } from "admin-bro";
+import { ValidationError } from "adminjs";
 import { LocationEntity } from "../../../../database/entities/location.entity";
 
 const validationEditLocation = async (request) => {

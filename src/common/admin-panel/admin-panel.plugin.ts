@@ -1,15 +1,15 @@
-import { Database, Resource } from "@admin-bro/typeorm";
+import { Database, Resource } from "@adminjs/typeorm";
 import { INestApplication } from "@nestjs/common";
-import AdminBro from "admin-bro";
 import buildAdminRouter from "./admin.router";
 import UserResource from "./resources/user.resource";
 import LocationResource from "./resources/location.resource";
 import TimeShotResource from "./resources/time-shot.resource";
+import AdminJS from "adminjs";
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
-    AdminBro.registerAdapter({ Database, Resource });
+    AdminJS.registerAdapter({ Database, Resource });
 
-    const adminBro = new AdminBro({
+    const adminJS = new AdminJS({
         resources: [
             UserResource,
             LocationResource,
@@ -18,9 +18,20 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         rootPath: '/admin',
         branding: {
             companyName: 'GroupBWT'
+        },
+        pages: {
+            'tracker': {
+                component: AdminJS.bundle('components/some-stats'),
+                icon: 'Purchase',
+                handler: async (request, response, context) => {
+                    return {
+                        text: 'I am fetched from the backend'
+                    };
+                }
+            }
         }
     });
 
-    const router = buildAdminRouter(adminBro);
-    app.use(adminBro.options.rootPath, router);
+    const router = buildAdminRouter(adminJS);
+    app.use(adminJS.options.rootPath, router);
 }

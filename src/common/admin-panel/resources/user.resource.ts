@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "admin-bro";
+import { ResourceWithOptions } from "adminjs";
 import * as bcrypt from 'bcrypt';
 import canGrantPermission from "../permissions/user.permission";
 import hasAdminPermission from "../permissions/has-admin.permission";

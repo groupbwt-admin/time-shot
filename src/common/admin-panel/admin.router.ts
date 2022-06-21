@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from "database/entities/user.entity";
-import { buildAuthenticatedRouter } from 'admin-bro-expressjs';
-import AdminBro from "admin-bro";
+import { buildAuthenticatedRouter } from "@adminjs/express/lib/buildAuthenticatedRouter";
+import AdminJS from "adminjs";
 
-const buildAdminRouter = (admin: AdminBro) => {
+const buildAdminRouter = (admin: AdminJS) => {
     const router = buildAuthenticatedRouter(admin, {
         cookieName: process.env.COOKIE_NAME,
         cookiePassword: process.env.COOKIE_PASSWORD,

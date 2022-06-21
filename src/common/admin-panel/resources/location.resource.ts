@@ -1,4 +1,4 @@
-import AdminBro, { ResourceWithOptions } from "admin-bro";
+import AdminJS, { ResourceWithOptions } from "adminjs";
 import { LocationEntity } from "../../../database/entities/location.entity";
 import activateLocation from "../handlers/activate.location";
 import canActivateLocation from "../permissions/location.activate.permission";
@@ -30,7 +30,7 @@ const LocationResource: ResourceWithOptions = {
         icon: 'Activate',
         actionType: 'record',
         handler: activateLocation,
-        component: AdminBro.bundle('../components/activated-locations'),
+        component: AdminJS.bundle('../components/activated-locations'),
       },
       new: {
         isAccessible: canModifyLocation,

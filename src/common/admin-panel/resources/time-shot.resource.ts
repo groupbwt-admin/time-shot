@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "admin-bro";
+import { ResourceWithOptions } from "adminjs";
 import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
 import hasAdminPermission from "../permissions/has-admin.permission";
 
