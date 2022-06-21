@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 import canGrantPermission from "../permissions/user.permission";
 import hasAdminPermission from "../permissions/has-admin.permission";
 import { UserEntity } from "database/entities/user.entity";
+import getHashPassword from "../../utils/get-hashed-password";
 
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
@@ -25,9 +26,7 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await bcrypt.hash(
-                                request.payload.password, process.env.SECRET_KEY
-                            ),
+                            hashedPassword: await getHashPassword(request.payload.password),
                         }
                     }
                     return request
@@ -39,9 +38,7 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await bcrypt.hash(
-                                request.payload.password, process.env.SECRET_KEY
-                            ),
+                            hashedPassword: await getHashPassword(request.payload.password),
                         }
                     }
                     return request
