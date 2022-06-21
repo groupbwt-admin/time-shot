@@ -1,9 +1,8 @@
 import { ResourceWithOptions } from "admin-bro";
-import { UserEntity } from "src/database/entities/user.entity";
 import * as bcrypt from 'bcrypt';
 import canGrantPermission from "../permissions/user.permission";
 import hasAdminPermission from "../permissions/has-admin.permission";
-
+import { UserEntity } from "database/entities/user.entity";
 
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,

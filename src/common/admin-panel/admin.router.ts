@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from "src/database/entities/user.entity";
+import { UserEntity } from "database/entities/user.entity";
 import { buildAuthenticatedRouter } from 'admin-bro-expressjs';
 import AdminBro from "admin-bro";
 
