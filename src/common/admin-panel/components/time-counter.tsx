@@ -11,7 +11,7 @@ const toHHMMSS = (milliseconds: number) => {
         .join(":");
 };
 
-const Timer = ({ initSecond, isEnableTracker }: { initSecond: number, isEnableTracker: boolean }) => {
+const TimeCounter = ({ initSecond, isEnableTracker }: { initSecond: number, isEnableTracker: boolean }) => {
     const [timedeltaMillisecond, setTimedeltaMillisecond] = useState(initSecond * 1000);
     const [startDate, setStartDate] = useState(new Date());
     const [previousTrackerState, setPreviousTrackerState] = useState(isEnableTracker);
@@ -36,4 +36,4 @@ const Timer = ({ initSecond, isEnableTracker }: { initSecond: number, isEnableTr
     );
 };
 
-export default Timer;
+export default TimeCounter;

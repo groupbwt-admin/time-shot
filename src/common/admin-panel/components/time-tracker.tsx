@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Label } from '@adminjs/design-system';
 import { ApiClient } from "adminjs";
-import Timer from "./time-count";
+import TimeCounter from "./time-counter";
+import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
 
 const api = new ApiClient();
 
@@ -34,7 +35,7 @@ const TimeTracker = () => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <Timer initSecond={todaySecond} isEnableTracker={isEnableTracker}></Timer>
+                    <TimeCounter initSecond={todaySecond} isEnableTracker={isEnableTracker}></TimeCounter>
                 </Label>
                 <button
                     onClick={() => setIsEnableTracker(!isEnableTracker)}
