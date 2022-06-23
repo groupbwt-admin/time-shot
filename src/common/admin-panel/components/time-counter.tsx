@@ -11,8 +11,8 @@ const toHHMMSS = (milliseconds: number) => {
         .join(":");
 };
 
-const TimeCounter = ({ initSecond, isEnableTracker }: { initSecond: number, isEnableTracker: boolean }) => {
-    const [timedeltaMillisecond, setTimedeltaMillisecond] = useState(initSecond * 1000);
+const TimeCounter = ({ initMillisecond, isEnableTracker }: { initMillisecond: number, isEnableTracker: boolean }) => {
+    const [timedeltaMillisecond, setTimedeltaMillisecond] = useState(initMillisecond);
     const [startDate, setStartDate] = useState(new Date());
     const [previousTrackerState, setPreviousTrackerState] = useState(isEnableTracker);
     useEffect(() => {
@@ -24,7 +24,7 @@ const TimeCounter = ({ initSecond, isEnableTracker }: { initSecond: number, isEn
         if (isEnableTracker) {
             const intervalId = setInterval(function () {
                 const currentDate = new Date();
-                setTimedeltaMillisecond(currentDate.getTime() + (initSecond * 1000) - startDate.getTime());
+                setTimedeltaMillisecond(currentDate.getTime() + (initMillisecond) - startDate.getTime());
             }, 1000);
             return () => {
                 clearInterval(intervalId);
