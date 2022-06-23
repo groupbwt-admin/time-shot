@@ -4,7 +4,12 @@ import { ApiClient } from "adminjs";
 import TimeCounter from "./time-counter";
 import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
 
+
 const api = new ApiClient();
+
+function todayDate(d: Date): Date {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
 
 async function getWorkingTimeShot() {
     const result = await api.resourceAction({
@@ -12,13 +17,14 @@ async function getWorkingTimeShot() {
         actionName: "getWorkingTimeShot",
         query: ''
     });
+    console.log(result.data.record);
     return result.data.record;
 }
 
-async function getTodayMillisecond() {
+async function getTotalMillisecondForCompletedTimeShotsToday() {
     const result = await api.resourceAction({
         resourceId: "TimeShotEntity",
-        actionName: "getTodayMillisecond",
+        actionName: "getTotalMillisecondForCompletedTimeShotsToday",
         query: ''
     });
     return result.data.totalMillisecond;
@@ -39,14 +45,23 @@ const TimeTracker = () => {
     const [todayMillisecond, setTodayMillisecond] = useState(0);
 
     async function initialize() {
-        const totalMillisecond: number = await getTodayMillisecond();
+        const totalMillisecond: number = await getTotalMillisecondForCompletedTimeShotsToday();
 
         const timeShotEntity: { id: string, start: string } | null = await getWorkingTimeShot();
         if (timeShotEntity) {
             setIsEnableTracker(true);
-            const startTimestamp = (new Date(timeShotEntity.start)).getTime();
-            const nowTimestamp = (new Date()).getTime();
-            const millisecondDelta = nowTimestamp - startTimestamp;
+            let startDate = new Date(timeShotEntity.start);
+            const nowDate = new Date();
+
+            if (
+                startDate.getFullYear() !== nowDate.getFullYear() ||
+                startDate.getMonth() !== nowDate.getMonth() ||
+                startDate.getDate() !== nowDate.getDate()
+            ) {
+                startDate = todayDate(nowDate);
+            }
+
+            const millisecondDelta = nowDate.getTime() - startDate.getTime();
             if (millisecondDelta < 0) {
                 throw new Error("error in calculating the past tense");
             }

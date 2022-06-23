@@ -21,7 +21,7 @@ const TimeShotResource: ResourceWithOptions = {
                 },
                 isVisible: false
             },
-            getTodayMillisecond: {
+            getTotalMillisecondForCompletedTimeShotsToday: {
                 handler: async (request, response, context) => {
                     const timeShotEntities: TimeShotEntity[] = await TimeShotEntity.find({
                         select: ["id", "start"],
@@ -37,7 +37,6 @@ const TimeShotResource: ResourceWithOptions = {
                         }
                     ).reduce((partialSum, a) => partialSum + a, 0);
 
-                    const record = {};
                     return {
                         totalMillisecond: totalMillisecond
                     };
