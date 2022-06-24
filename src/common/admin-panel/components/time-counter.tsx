@@ -6,12 +6,16 @@ const toHHMMSS = (milliseconds: number) => {
     const minutes = Math.floor(secNumber / 60) % 60;
     const hours = Math.floor(secNumber / 3600);
 
-    return [hours, minutes, seconds]
+    const formatText = [hours, minutes, seconds]
         .map(v => v < 10 ? "0" + v : v)
         .join(":");
+    console.log(formatText);
+    return formatText;
 };
 
 const TimeCounter = ({ initMillisecond, isEnableTracker }: { initMillisecond: number, isEnableTracker: boolean }) => {
+    console.log(initMillisecond);
+
     const [timedeltaMillisecond, setTimedeltaMillisecond] = useState(initMillisecond);
     const [startDate, setStartDate] = useState(new Date());
     const [previousTrackerState, setPreviousTrackerState] = useState(isEnableTracker);

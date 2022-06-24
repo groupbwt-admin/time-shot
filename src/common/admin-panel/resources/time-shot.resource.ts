@@ -1,7 +1,7 @@
 import { ResourceWithOptions } from "adminjs";
 import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
 import hasAdminPermission from "../permissions/has-admin.permission";
-import { IsNull, Not, Raw } from "typeorm";
+import { getManager } from "typeorm";
 
 const TimeShotResource: ResourceWithOptions = {
     resource: TimeShotEntity,
@@ -11,7 +11,10 @@ const TimeShotResource: ResourceWithOptions = {
                 handler: async (request, response, context) => {
                     const timeShotEntity: TimeShotEntity = await TimeShotEntity.findOne({
                         select: ["id", "start"],
-                        where: { stop: null }
+                        where: {
+                            user: context.currentAdmin.id,
+                            stop: null
+                        }
                     });
 
                     const record: object | null = timeShotEntity ? timeShotEntity : null;
@@ -23,23 +26,73 @@ const TimeShotResource: ResourceWithOptions = {
             },
             getTotalMillisecondForCompletedTimeShotsToday: {
                 handler: async (request, response, context) => {
-                    const timeShotEntities: TimeShotEntity[] = await TimeShotEntity.find({
-                        select: ["id", "start"],
-                        where: [{
-                            stop: Not(IsNull()),
-                            start: Raw(`DATE(${(new Date()).toISOString().substring(0, 10)})`)
-                        }]
+                    const { millisecond: raw_millisecond }: { millisecond: number | null } = await getManager().transaction(async (transactionalEntityManager) => {
+                        return await transactionalEntityManager
+                            .createQueryBuilder()
+                            .select("SUM(TIMESTAMPDIFF(MICROSECOND, IF(DATE(start) = DATE(NOW()), start, DATE(NOW())), stop)) / 1000 as millisecond")
+                            .from(TimeShotEntity, "time_shots")
+                            .where({
+                                user: context.currentAdmin.id
+                            }).andWhere(
+                                "DATE(stop) = DATE(NOW())", {}
+                            )
+                            .getRawOne();
                     });
-
-                    let totalMillisecond: number = timeShotEntities.map(tse => {
-                            (new Date(tse.stop)).getTime();
-                            return -(new Date(tse.start)).getTime();
-                        }
-                    ).reduce((partialSum, a) => partialSum + a, 0);
-
+                    const millisecond: number = raw_millisecond ?? 0;
                     return {
-                        totalMillisecond: totalMillisecond
+                        totalMillisecond: millisecond
                     };
+                }
+            },
+            startTracker: {
+                handler: async (request, response, context) => {
+                    await getManager().transaction(async (transactionalEntityManager) => {
+                        const timeShotEntity: TimeShotEntity = await TimeShotEntity.findOne({
+                            select: ["id"],
+                            where: {
+                                user: context.currentAdmin.id,
+                                stop: null
+                            }
+                        });
+                        if (!timeShotEntity) {
+                            await transactionalEntityManager
+                                .createQueryBuilder()
+                                .insert()
+                                .into(TimeShotEntity)
+                                .values({
+                                    user: () => `"${context.currentAdmin.id}"`,
+                                    locationStart: () => "1191619f-f8e8-466a-8a29-111a6e0e285f"
+                                })
+                                .execute();
+                        }
+                    });
+                    return {};
+                }
+            },
+            stopTracker: {
+                handler: async (request, response, context) => {
+                    await getManager().transaction(async (transactionalEntityManager) => {
+                        const timeShotEntity: TimeShotEntity = await TimeShotEntity.findOne({
+                            select: ["id"],
+                            where: {
+                                user: context.currentAdmin.id,
+                                stop: null
+                            }
+                        });
+                        if (timeShotEntity) {
+                            await transactionalEntityManager
+                                .createQueryBuilder()
+                                .update(TimeShotEntity)
+                                .set({
+                                    stop: () => "NOW(6)"
+                                })
+                                .where({
+                                    id: timeShotEntity.id
+                                })
+                                .execute();
+                        }
+                    });
+                    return {};
                 }
             },
             edit: { isAccessible: hasAdminPermission },
