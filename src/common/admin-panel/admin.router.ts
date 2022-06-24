@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import { UserEntity } from "src/database/entities/user.entity";
-import { buildAuthenticatedRouter } from "@adminjs/express/lib/buildAuthenticatedRouter";
-import AdminJS from "adminjs";
+import { UserEntity } from 'src/database/entities/user.entity';
+import AdminJS from 'adminjs';
+import { buildAuthenticatedRouter } from './routers/buildAuthenticatedRouter';
 
 const buildAdminRouter = (admin: AdminJS) => {
     const router = buildAuthenticatedRouter(admin, {
