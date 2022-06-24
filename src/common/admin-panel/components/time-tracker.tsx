@@ -27,17 +27,23 @@ async function getTotalMillisecondForCompletedTimeShotsToday() {
     return result.data.totalMillisecond;
 }
 
+async function recalculateCounter(setTodayMillisecond, setIsEnableTracker) {
+    const totalMillisecond: number = await getTotalMillisecondForCompletedTimeShotsToday();
+    const timeShotEntity: { id: string, start: string } | null = await getWorkingTimeShot();
+    const millisecondDelta: number = getMillisecondDelta(timeShotEntity);
+    setTodayMillisecond(Math.floor(totalMillisecond + millisecondDelta));
+    setIsEnableTracker(!!timeShotEntity);
+}
 
-async function onClickTimeTracker(isEnableTracker: boolean, setIsEnableTracker: Function) {
-    console.log('YES');
+async function onClickTimeTracker(isEnableTracker: boolean, setTodayMillisecond: Function, setIsEnableTracker: Function) {
     await api.resourceAction({
         resourceId: "TimeShotEntity",
-        actionName: isEnableTracker ? "stopTracker" : "startTracker",
-        data: {
-            "user": "57eda2be-6bca-4871-8358-d141ef2ad06e",
-            "location": "99be802a-e568-4b60-881e-a5306ea8666f"
-        }
+        actionName: isEnableTracker ? "stopTracker" : "startTracker"
     });
+    if (isEnableTracker) {
+        await recalculateCounter(setTodayMillisecond, setIsEnableTracker);
+    }
+
     setIsEnableTracker(!isEnableTracker);
 }
 
@@ -87,13 +93,7 @@ const TimeTracker = () => {
     const [todayMillisecond, setTodayMillisecond] = useState(0);
 
     async function initialize() {
-        const totalMillisecond: number = await getTotalMillisecondForCompletedTimeShotsToday();
-        const timeShotEntity: { id: string, start: string } | null = await getWorkingTimeShot();
-        const millisecondDelta: number = getMillisecondDelta(timeShotEntity);
-        const v = totalMillisecond + millisecondDelta;
-        console.log(v);
-        setTodayMillisecond(totalMillisecond + millisecondDelta);
-        setIsEnableTracker(!!timeShotEntity);
+        await recalculateCounter(setTodayMillisecond, setIsEnableTracker);
     }
 
     useEffect(() => {
@@ -115,8 +115,8 @@ const TimeTracker = () => {
                     <TimeCounter initMillisecond={todayMillisecond} isEnableTracker={isEnableTracker}></TimeCounter>
                 </Label>
                 <button
-                    onClick={() => setIsEnableTracker(!isEnableTracker)}
-                    /*onClickTimeTracker(isEnableTracker, setIsEnableTracker)*/
+                    onClick={() => onClickTimeTracker(isEnableTracker, setTodayMillisecond, setIsEnableTracker)}
+
                     style={{
                         border: "none",
                         backgroundColor: isEnableTracker ? "#ffdada" : "#e4ffd7",

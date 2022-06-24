@@ -61,7 +61,7 @@ const TimeShotResource: ResourceWithOptions = {
                                 .into(TimeShotEntity)
                                 .values({
                                     user: () => `"${context.currentAdmin.id}"`,
-                                    locationStart: () => "1191619f-f8e8-466a-8a29-111a6e0e285f"
+                                    locationStart: () => `"1191619f-f8e8-466a-8a29-111a6e0e285f"` // TODO:
                                 })
                                 .execute();
                         }
@@ -84,7 +84,8 @@ const TimeShotResource: ResourceWithOptions = {
                                 .createQueryBuilder()
                                 .update(TimeShotEntity)
                                 .set({
-                                    stop: () => "NOW(6)"
+                                    stop: () => "NOW()",
+                                    locationEnd: () => `"1191619f-f8e8-466a-8a29-111a6e0e285f"` // TODO:
                                 })
                                 .where({
                                     id: timeShotEntity.id
