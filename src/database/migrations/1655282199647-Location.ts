@@ -9,9 +9,9 @@ export class Location1655282199647 implements MigrationInterface {
                                      \`id\`        varchar(36)  NOT NULL,
                                      \`creatorId\` varchar(36) NOT NULL,
                                      \`name\`      varchar(256) NOT NULL,
-                                     \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-                                     \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP (6),
-                                     \`deletedAt\` timestamp(6) NULL,
+                                     \`createdAt\` timestamp() NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                                     \`updatedAt\` timestamp() NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP (),
+                                     \`deletedAt\` timestamp() NULL,
                                      INDEX         \`ix_locations_creator\` (\`creatorId\`),
                                      UNIQUE INDEX \`IDX_227023051ab1fedef7a3b6c7e2\` (\`name\`),
                                      PRIMARY KEY (\`id\`)

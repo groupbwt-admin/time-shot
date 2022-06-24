@@ -10,7 +10,7 @@ export class createTimeShotsTable1655712256166 implements MigrationInterface {
                                      \`userId\`          varchar(36) NOT NULL,
                                      \`locationStartId\` varchar(36) NOT NULL,
                                      \`locationEndId\`   varchar(36) NULL,
-                                     \`start\`           timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+                                     \`start\`           timestamp() NOT NULL DEFAULT CURRENT_TIMESTAMP(),
                                      \`stop\`            timestamp NULL,
                                      PRIMARY KEY (\`id\`)
                                  ) ENGINE=InnoDB`);

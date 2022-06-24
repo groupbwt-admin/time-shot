@@ -28,10 +28,10 @@ export class LocationEntity extends BaseEntity {
   @Column({ length: 256, unique: true })
   name: string;
 
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP()" })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP()", onUpdate: "CURRENT_TIMESTAMP()" })
   updatedAt: Date;
 
   @DeleteDateColumn({ type: "timestamp", default: null })

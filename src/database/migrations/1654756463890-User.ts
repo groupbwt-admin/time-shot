@@ -5,11 +5,11 @@ export class User1654756463890 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE \`users\`
-            ADD \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)`);
+            ADD \`createdAt\` timestamp() NOT NULL DEFAULT CURRENT_TIMESTAMP()`);
         await queryRunner.query(`ALTER TABLE \`users\`
-            ADD \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)`);
+            ADD \`updatedAt\` timestamp() NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()`);
         await queryRunner.query(`ALTER TABLE \`users\`
-            ADD \`deletedAt\` timestamp(6) NULL`);
+            ADD \`deletedAt\` timestamp() NULL`);
         await queryRunner.query(`ALTER TABLE \`users\` DROP COLUMN role`);
         await queryRunner.query(`ALTER TABLE \`users\`
             ADD role enum ('superadmin', 'admin', 'user') NOT NULL DEFAULT 'user'`);
