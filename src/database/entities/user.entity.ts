@@ -4,7 +4,8 @@ import {
     CreateDateColumn,
     DeleteDateColumn,
     Entity,
-    Index, OneToMany,
+    Index,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
@@ -31,13 +32,18 @@ export class UserEntity extends BaseEntity {
     @Column('enum', { enum: Role, default: Role.USER, nullable: false })
     role: Role;
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP()" })
+    @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
-    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP()", onUpdate: "CURRENT_TIMESTAMP()" })
+    @UpdateDateColumn({
+        precision: null,
+        type: "timestamp",
+        default: () => "CURRENT_TIMESTAMP",
+        onUpdate: "CURRENT_TIMESTAMP"
+    })
     updatedAt: Date;
 
-    @DeleteDateColumn({ type: "timestamp", default: null })
+    @DeleteDateColumn({ precision: null, type: "timestamp", default: null })
     deletedAt?: Date;
 
     @OneToMany(() => TimeShotEntity, timeShot => timeShot.user)

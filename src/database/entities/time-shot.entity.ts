@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from "./user.entity";
 import { LocationEntity } from "./location.entity";
 import { ApiProperty } from "@nestjs/swagger";
@@ -9,30 +9,21 @@ export class TimeShotEntity extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ManyToOne(() => UserEntity, user => user.timeShots, {
-        nullable: false,
-        onDelete: "CASCADE"
-    })
+    @ManyToOne(() => UserEntity, user => user.timeShots, { nullable: false })
     @JoinColumn({ name: "userId" })
     user: UserEntity;
 
-    @ManyToOne(() => LocationEntity, location => location.startTimeShots, {
-        nullable: false,
-        onDelete: "CASCADE"
-    })
+    @ManyToOne(() => LocationEntity, location => location.startTimeShots, { nullable: false })
     @JoinColumn({ name: "locationStartId" })
     locationStart: LocationEntity;
 
-    @ManyToOne(() => LocationEntity, location => location.endTimeShots, {
-        nullable: true,
-        onDelete: "CASCADE"
-    })
+    @ManyToOne(() => LocationEntity, location => location.endTimeShots, { nullable: true })
     @JoinColumn({ name: "locationEndId" })
     locationEnd: LocationEntity;
 
-    @CreateDateColumn({ type: "timestamp" })
+    @Column({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     start: Date;
 
-    @Column({ type: "timestamp", nullable: true })
-    stop: Date;
+    @Column({ precision: null, type: "timestamp", nullable: true })
+    stop?: Date;
 }
