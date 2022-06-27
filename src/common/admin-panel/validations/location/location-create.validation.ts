@@ -3,7 +3,11 @@ import { LocationEntity } from "../../../../database/entities/location.entity";
 
 const validationCreateLocation = async (request) => {
   const { name } = request.payload;
-  if (await LocationEntity.findOne({ where: { name: name } })) {
+  const findLocation = await LocationEntity.findOne({ 
+    select: ['id'], 
+    where: { name: name } 
+  });
+  if (findLocation) {
     throw new ValidationError({
       name: {
         message: 'A location with the same name already exists!'
@@ -11,7 +15,7 @@ const validationCreateLocation = async (request) => {
     });
   }
   const { id } = request.session.adminUser;
-  request.payload.creatorId = id;
+  request.payload['creator.id'] = id;
   return request
 };
 
