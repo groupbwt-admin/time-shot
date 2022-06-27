@@ -1,7 +1,10 @@
-import { ResourceWithOptions } from "adminjs";
+import { ActionRequest, ResourceWithOptions } from "adminjs";
 import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
 import hasAdminPermission from "../permissions/has-admin.permission";
 import { getManager } from "typeorm";
+import parseCookiesFromActionRequest from "../../utils/parse-cookies-from-action-request";
+import { JwtService } from "@nestjs/jwt";
+import { jwtConstants } from "../../constants/jwt-constants";
 
 const TimeShotResource: ResourceWithOptions = {
     resource: TimeShotEntity,
@@ -45,7 +48,11 @@ const TimeShotResource: ResourceWithOptions = {
                 }
             },
             startTracker: {
-                handler: async (request, response, context) => {
+                handler: async (request: ActionRequest, response, context) => {
+                    const cookies: { accessToken: string } = parseCookiesFromActionRequest(request);
+                    const jwtService = new JwtService({ secret: jwtConstants.secret });
+                    const jwtContent: { locationId: string } = jwtService.verify(cookies.accessToken);
+
                     await getManager().transaction(async (transactionalEntityManager) => {
                         const timeShotEntity: TimeShotEntity = await TimeShotEntity.findOne({
                             select: ["id"],
@@ -61,7 +68,7 @@ const TimeShotResource: ResourceWithOptions = {
                                 .into(TimeShotEntity)
                                 .values({
                                     user: () => `"${context.currentAdmin.id}"`,
-                                    locationStart: () => `"1191619f-f8e8-466a-8a29-111a6e0e285f"` // TODO:
+                                    locationStart: () => `"${jwtContent.locationId}"` // TODO:
                                 })
                                 .execute();
                         }
@@ -71,6 +78,10 @@ const TimeShotResource: ResourceWithOptions = {
             },
             stopTracker: {
                 handler: async (request, response, context) => {
+                    const cookies: { accessToken: string } = parseCookiesFromActionRequest(request);
+                    const jwtService = new JwtService({ secret: jwtConstants.secret });
+                    const jwtContent: { locationId: string } = jwtService.verify(cookies.accessToken);
+
                     await getManager().transaction(async (transactionalEntityManager) => {
                         const timeShotEntity: TimeShotEntity = await TimeShotEntity.findOne({
                             select: ["id"],
@@ -85,7 +96,7 @@ const TimeShotResource: ResourceWithOptions = {
                                 .update(TimeShotEntity)
                                 .set({
                                     stop: () => "NOW()",
-                                    locationEnd: () => `"1191619f-f8e8-466a-8a29-111a6e0e285f"` // TODO:
+                                    locationEnd: () => `"${jwtContent.locationId}"` // TODO:
                                 })
                                 .where({
                                     id: timeShotEntity.id
