@@ -8,6 +8,7 @@ import getCookie from '../../utils/get-cookie';
 import parseJwt from '../../utils/parse-jwt';
 import { JwtService } from "@nestjs/jwt";
 import { jwtConstants } from '../../constants/jwt-constants';
+import { Role } from '../../enums/role.enum';
 
 const jwtService = new JwtService();
 
@@ -144,7 +145,7 @@ export const withLogin = (
             res = changeAccessToken(res, accessToken, adminUser);
             res.redirect(302, (<any>req).session.redirectTo);
           } else {
-            adminUser.role === 'user'
+            adminUser.role === Role.USER
               ? res.send(loginWhenLocationNotActivate)
               : res.redirect(302, (<any>req).session.redirectTo);
           }
@@ -153,7 +154,7 @@ export const withLogin = (
             res = changeAccessToken(res, accessToken, adminUser);
             res.redirect(302, rootPath);
           } else {
-            adminUser.role === 'user'
+            adminUser.role === Role.USER
               ? res.send(loginWhenLocationNotActivate)
               : res.redirect(302, rootPath);
           }
