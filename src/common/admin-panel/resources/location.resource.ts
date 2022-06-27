@@ -15,9 +15,12 @@ const LocationResource: ResourceWithOptions = {
       deletedAt: {
         isVisible: false,
       },
-      creatorId: {
+      'creator.id': {
+        isVisible: false,
+      },
+      creatorEmail: {
         isVisible: {
-          edit: false, show: true, list: true,
+          edit: false, show: true, list: true, filter: false,
         },
       },
     },
