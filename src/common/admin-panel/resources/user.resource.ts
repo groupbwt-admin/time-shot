@@ -39,13 +39,15 @@ const UserResource: ResourceWithOptions = {
                 type: 'password',
                 isVisible: {
                     list: false, edit: true, filter: false, show: false
-                }
+                },
+                position: 10
             },
             duplicatePassword: {
                 type: 'password',
                 isVisible: {
                     list: false, edit: true, filter: false, show: false
-                }
+                },
+                position: 11
             },
             role: {
                 isVisible: {
@@ -55,13 +57,15 @@ const UserResource: ResourceWithOptions = {
                     user: Role.USER,
                     admin: Role.ADMIN,
                     superadmin: Role.SUPERADMIN
-                }
+                },
+                position: 12
             },
             deletedAt: {
                 type: 'date',
                 isVisible: {
                     list: false, edit: true, filter: true, show: true
-                }
+                },
+                position: 13
             },
         },
         actions: {
