@@ -28,6 +28,7 @@ const TimeShotResource: ResourceWithOptions = {
                 isVisible: false
             },
             getTotalMillisecondForCompletedTimeShotsToday: {
+                isVisible: false,
                 handler: async (request, response, context) => {
                     const { millisecond: raw_millisecond }: { millisecond: number | null } = await getManager().transaction(async (transactionalEntityManager) => {
                         return await transactionalEntityManager
@@ -48,6 +49,7 @@ const TimeShotResource: ResourceWithOptions = {
                 }
             },
             startTracker: {
+                isVisible: false,
                 handler: async (request: ActionRequest, response, context) => {
                     const cookies: { accessToken: string } = parseCookiesFromActionRequest(request);
                     const jwtService = new JwtService({ secret: jwtConstants.secret });
@@ -77,6 +79,7 @@ const TimeShotResource: ResourceWithOptions = {
                 }
             },
             stopTracker: {
+                isVisible: false,
                 handler: async (request, response, context) => {
                     const cookies: { accessToken: string } = parseCookiesFromActionRequest(request);
                     const jwtService = new JwtService({ secret: jwtConstants.secret });
