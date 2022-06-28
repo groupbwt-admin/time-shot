@@ -4,33 +4,28 @@ import {
     CreateDateColumn,
     DeleteDateColumn,
     Entity,
-    Index,
+    ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../../common/enums/role.enum';
+import { UserEntity } from './user.entity';
 import { TimeShotEntity } from "./time-shot.entity";
 
-@Entity('users')
-export class UserEntity extends BaseEntity {
+@Entity('locations')
+export class LocationEntity extends BaseEntity {
     @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'UUID.' })
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ApiProperty({ example: 'user@host.com', description: 'Account email.' })
-    @Index("ux_users_email", { unique: true })
-    @Column({ length: 32, unique: true, nullable: false, update: false })
-    email: string;
+    @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174121', description: 'UUID creator.' })
+    @ManyToOne(() => UserEntity, { nullable: false })
+    creator: string;
 
-    @ApiProperty({ example: 'd1e8a70...8943d082', description: 'Hashed password.' })
-    @Column({ length: 255, nullable: false, select: true })
-    hashedPassword: string;
-
-    @ApiProperty({ example: Role.USER, default: Role.USER, description: "Permission role." })
-    @Column('enum', { enum: Role, default: Role.USER, nullable: false })
-    role: Role;
+    @ApiProperty({ example: "First Location", description: "Name location." })
+    @Column({ length: 256, unique: true })
+    name: string;
 
     @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
@@ -46,6 +41,9 @@ export class UserEntity extends BaseEntity {
     @DeleteDateColumn({ precision: null, type: "timestamp", default: null })
     deletedAt?: Date;
 
-    @OneToMany(() => TimeShotEntity, timeShot => timeShot.user)
-    timeShots: TimeShotEntity[];
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationStart)
+    startTimeShots: TimeShotEntity[];
+
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationEnd)
+    endTimeShots: TimeShotEntity[];
 }

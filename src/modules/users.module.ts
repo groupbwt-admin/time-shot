@@ -5,11 +5,12 @@ import { UserEntity } from '../database/entities/user.entity';
 import { UserService } from '../services/user.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([UserEntity]),
-  ],
-  controllers: [UserController],
-  providers: [UserService],
-  exports: [UserService],
+    imports: [
+        TypeOrmModule.forFeature([UserEntity])
+    ],
+    controllers: [UserController],
+    providers: [UserService],
+    exports: [UserService]
 })
-export class UsersModule { }
+export class UsersModule {
+}
