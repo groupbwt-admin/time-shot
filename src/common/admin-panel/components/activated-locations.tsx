@@ -13,7 +13,7 @@ const Dashboard = (props) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShouldRedirect(true);
-    }, 15500);
+    }, 1500);
 
     return () => clearTimeout(timeoutId);
   }, []);
