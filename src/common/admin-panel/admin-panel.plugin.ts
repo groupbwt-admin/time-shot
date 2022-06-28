@@ -23,7 +23,6 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
             component: AdminJS.bundle('components/time-tracker'),
         }
     });
-
     const router = buildAdminRouter(adminJS);
     app.use(adminJS.options.rootPath, router);
 }

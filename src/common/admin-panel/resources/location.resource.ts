@@ -8,55 +8,56 @@ import listLocation from "../handlers/list.location";
 import showLocation from "../handlers/show.location";
 
 const LocationResource: ResourceWithOptions = {
-    resource: LocationEntity,
-    options: {
-        properties: {
-            deletedAt: {
-                isVisible: false
-            },
-            creatorId: {
-                isVisible: {
-                    edit: false,
-                    show: true,
-                    list: true
-                }
-            }
+  resource: LocationEntity,
+  options: {
+    properties: {
+      deletedAt: {
+        isVisible: false,
+      },
+      'creator.id': {
+        isVisible: false,
+      },
+      creatorEmail: {
+        isVisible: {
+          edit: false, show: true, list: true, filter: false,
         },
-        navigation: {
-            icon: "Location",
-            name: null
-        },
-        actions: {
-            activateLocation: {
-                isAccessible: hasAdminPermission,
-                icon: 'Activate',
-                actionType: 'record',
-                handler: activateLocation,
-                component: AdminJS.bundle('../components/activated-locations')
-            },
-            new: {
-                isAccessible: hasAdminPermission,
-                before: validationCreateLocation,
-            },
-            edit: {
-                isAccessible: hasAdminPermission,
-                before: validationEditLocation
-            },
-            delete: {
-                isAccessible: hasAdminPermission
-            },
-            bulkDelete: { isAccessible: hasAdminPermission },
-            search: { isAccessible: hasAdminPermission },
-            list: {
-                isAccessible: hasAdminPermission,
-                after: listLocation
-            },
-            show: {
-                isAccessible: hasAdminPermission,
-                after: showLocation
-            }
-        }
-    }
+      },
+    },
+    navigation: {
+      icon: "Location",
+      name: null,
+    },
+    actions: {
+      activateLocation: {
+        isAccessible: hasAdminPermission,
+        icon: 'Activate',
+        actionType: 'record',
+        handler: activateLocation,
+        component: AdminJS.bundle('../components/activated-locations'),
+      },
+      new: {
+        isAccessible: hasAdminPermission,
+        before: validationCreateLocation,
+      },
+      edit: {
+        isAccessible: hasAdminPermission,
+        before: validationEditLocation,
+      },
+      delete: {
+        isAccessible: hasAdminPermission,
+      },
+      bulkDelete: { isAccessible: hasAdminPermission },
+      search: { isAccessible: hasAdminPermission },
+      list: {
+        isAccessible: hasAdminPermission,
+        after: listLocation
+      },
+      show: {
+        isAccessible: hasAdminPermission,
+        after: showLocation
+      }
+    },
+  },
 };
 
 export default LocationResource;

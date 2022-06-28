@@ -1,5 +1,4 @@
-import { ResourceWithOptions } from "adminjs";
-import * as bcrypt from 'bcrypt';
+import { ResourceWithOptions } from "adminjs"
 import canGrantPermission from "../permissions/user.permission";
 import hasAdminPermission from "../permissions/has-admin.permission";
 import { UserEntity } from "database/entities/user.entity";

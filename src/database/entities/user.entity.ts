@@ -32,9 +32,11 @@ export class UserEntity extends BaseEntity {
     @Column('enum', { enum: Role, default: Role.USER, nullable: false })
     role: Role;
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @UpdateDateColumn({
         precision: null,
         type: "timestamp",
@@ -43,6 +45,7 @@ export class UserEntity extends BaseEntity {
     })
     updatedAt: Date;
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @DeleteDateColumn({ precision: null, type: "timestamp", default: null })
     deletedAt?: Date;
 

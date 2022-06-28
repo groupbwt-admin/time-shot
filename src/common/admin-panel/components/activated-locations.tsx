@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
-import { withRouter } from 'react-router-dom';
 import { createBrowserHistory } from "history";
+import { MessageBox } from '@adminjs/design-system';
 
 const Dashboard = (props) => {
   const { logoutPath } = props.record;
   if (!logoutPath) {
     return null;
   }
-  const withRefresh = createBrowserHistory({ forceRefresh: true });
-  withRefresh.push({
-    pathname: logoutPath,
-  });
 
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShouldRedirect(true);
+    }, 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  if (shouldRedirect) {
+    const withRefresh = createBrowserHistory({ forceRefresh: true });
+    withRefresh.push({
+      pathname: logoutPath,
+    });
+    return (
+      <Redirect to={{ pathname: logoutPath }} />
+    )
+  }
   return (
-    <Redirect to={{ pathname: logoutPath }} />
+    <MessageBox message='Location is activated!' />
   );
-
 };
 
-export default withRouter(Dashboard);
+export default Dashboard;

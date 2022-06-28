@@ -38,12 +38,15 @@ export class LocationEntity extends BaseEntity {
     })
     updatedAt: Date;
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @DeleteDateColumn({ precision: null, type: "timestamp", default: null })
     deletedAt?: Date;
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationStart)
     startTimeShots: TimeShotEntity[];
 
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
     @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationEnd)
     endTimeShots: TimeShotEntity[];
 }
