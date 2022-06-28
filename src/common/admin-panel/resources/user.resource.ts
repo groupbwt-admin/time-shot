@@ -3,7 +3,6 @@ import { UserEntity } from 'src/database/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import canModifyUser from '../permissions/user.permission';
 import { usersPerPageLimit } from '../../constants/adminjs-constants';
-import AdminBro from 'admin-bro';
 import { Role } from '../../enums/role.enum';
 import UserCreateValidator from '../validations/user/user-create.validation'
 import UserUpdateValidator from '../validations/user/user-update.validation'
@@ -90,7 +89,6 @@ const UserResource: ResourceWithOptions = {
                     }
                     return request;
                 },
-                // component: AdminBro.bundle('../../components/user-edit')
             }, 
             list: {
                 before: async (request, context) => {
