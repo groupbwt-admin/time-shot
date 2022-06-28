@@ -1,7 +1,6 @@
 # compiled output
 /dist
 /node_modules
-.adminjs/*
 
 # Logs
 logs
@@ -37,3 +36,4 @@ lerna-debug.log*
 
 # Configs
 .env
+.adminjs/*

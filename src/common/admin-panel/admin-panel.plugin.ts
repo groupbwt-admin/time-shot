@@ -1,25 +1,28 @@
 import { Database, Resource } from "@adminjs/typeorm";
 import { INestApplication } from "@nestjs/common";
 import buildAdminRouter from "./admin.router";
-import LocationResource from "./resources/location.resource";
 import UserResource from "./resources/user.resource";
-import AdminJS, { Router } from "adminjs";
+import LocationResource from "./resources/location.resource";
+import TimeShotResource from "./resources/time-shot.resource";
+import AdminJS from "adminjs";
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
     AdminJS.registerAdapter({ Database, Resource });
 
-    const adminBro = new AdminJS({
+    const adminJS = new AdminJS({
         resources: [
             UserResource,
             LocationResource,
+            TimeShotResource
         ],
         rootPath: '/admin',
         branding: {
-            companyName: 'GroupBWT',
+            companyName: 'GroupBWT'
+        },
+        dashboard: {
+            component: AdminJS.bundle('components/time-tracker'),
         }
     });
-
-    const router = buildAdminRouter(adminBro);
-
-    app.use(adminBro.options.rootPath, router);
+    const router = buildAdminRouter(adminJS);
+    app.use(adminJS.options.rootPath, router);
 }

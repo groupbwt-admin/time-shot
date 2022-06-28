@@ -1,7 +1,7 @@
-import * as bcrypt from 'bcrypt';
-import { UserEntity } from 'src/database/entities/user.entity';
-import AdminJS from 'adminjs';
+import * as bcrypt from "bcrypt";
 import { buildAuthenticatedRouter } from './routers/buildAuthenticatedRouter';
+import { UserEntity } from "database/entities/user.entity";
+import AdminJS from "adminjs";
 
 const buildAdminRouter = (admin: AdminJS) => {
     const router = buildAuthenticatedRouter(admin, {
@@ -13,16 +13,15 @@ const buildAdminRouter = (admin: AdminJS) => {
                 return null;
             }
 
-            const hashedPassword = await bcrypt.hash(password, process.env.SECRET_KEY)
-            if (hashedPassword === user.hashedPassword) {
+            if (await bcrypt.compare(password, user.hashedPassword)) {
                 return user;
             }
 
             return null;
-        },
+        }
     }, null, {
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: true
     });
     return router;
 };

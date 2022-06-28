@@ -6,17 +6,20 @@ import { UsersModule } from './modules/users.module';
 import { AuthModule } from './modules/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getTypeOrmModuleOptions } from './config/typeorm.config';
+import { CreateAccountCommand } from "./commands/create-account.command";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      envFilePath: '.env',
+      isGlobal: true
     }),
     TypeOrmModule.forRoot(getTypeOrmModuleOptions()),
     UsersModule,
-    AuthModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CreateAccountCommand]
 })
-export class AppModule { }
+export class AppModule {
+}

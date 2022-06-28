@@ -6,7 +6,8 @@ import { LoginUserDto } from '../common/dtos/login-user.dto';
 export class AuthController {
     constructor(
         private authService: AuthService
-    ) { }
+    ) {
+    }
 
     @Post('auth/login')
     async login(@Body() body: LoginUserDto): Promise<Object> {

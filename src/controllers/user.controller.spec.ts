@@ -11,13 +11,13 @@ describe('UserController', () => {
         }),
         findOneByEmail: jest.fn((email) => {
             return { email };
-        }),
+        })
     };
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [UserController],
-            providers: [UserService],
+            providers: [UserService]
         }).overrideProvider(UserService).useValue(mockUserService).compile();
 
         controller = module.get<UserController>(UserController);
@@ -36,6 +36,6 @@ describe('UserController', () => {
         const req = { user: { username: 'user@user.com' } };
         expect(await controller.getProfile(req)).toEqual({ email: 'user@user.com' });
         expect(mockUserService.findOneByEmail).toHaveBeenCalled();
-    })
+    });
 
 });

@@ -1,16 +1,17 @@
 import {
-    Entity,
+    BaseEntity,
     Column,
-    PrimaryGeneratedColumn,
-    Index,
-    UpdateDateColumn,
     CreateDateColumn,
     DeleteDateColumn,
-    BaseEntity,
+    Entity,
     ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntity } from './user.entity';
+import { TimeShotEntity } from "./time-shot.entity";
 
 @Entity('locations')
 export class LocationEntity extends BaseEntity {
@@ -19,23 +20,33 @@ export class LocationEntity extends BaseEntity {
     id: string;
 
     @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174121', description: 'UUID creator.' })
-    @Index("ix_locations_creator")
-    @ManyToOne(() => UserEntity)
+    @ManyToOne(() => UserEntity, { nullable: false })
     creator: string;
 
     @ApiProperty({ example: "First Location", description: "Name location." })
     @Column({ length: 256, unique: true })
     name: string;
 
-    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
-    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
-    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+    @UpdateDateColumn({
+        precision: null,
+        type: "timestamp",
+        default: () => "CURRENT_TIMESTAMP",
+        onUpdate: "CURRENT_TIMESTAMP"
+    })
     updatedAt: Date;
 
     @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
-    @DeleteDateColumn({ type: "timestamp", default: null })
+    @DeleteDateColumn({ precision: null, type: "timestamp", default: null })
     deletedAt?: Date;
+
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationStart)
+    startTimeShots: TimeShotEntity[];
+
+    @ApiProperty({ example: '2022-06-27 09:26:50', description: 'timestamp' })
+    @OneToMany(() => TimeShotEntity, timeShot => timeShot.locationEnd)
+    endTimeShots: TimeShotEntity[];
 }
