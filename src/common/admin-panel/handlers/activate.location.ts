@@ -36,6 +36,7 @@ const activateLocation = async (request, response, context) => {
   )
   return {
     record: {
+      message: 'Location is activated!',
       accessToken,
       logoutPath,
       ...location.toJSON(context.currentAdmin),
