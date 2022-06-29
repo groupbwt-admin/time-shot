@@ -16,6 +16,7 @@ const changeAccessToken = (response, accessToken, adminUser) => {
   const decodeAccessToken = parseJwt(accessToken);
   const payload = {
     locationId: decodeAccessToken.locationId,
+    locationName: decodeAccessToken.locationName,
     activatorId: decodeAccessToken.activatorId,
     userId: adminUser.id,
   };
@@ -135,6 +136,7 @@ export const withLogin = (
       errorMessage: 'Location does not activated',
     });
     if (adminUser) {
+      adminUser.location = accessToken ? parseJwt(accessToken).locationName : null;
       (<any>req).session.adminUser = adminUser;
       (<any>req).session.save((err) => {
         if (err) {

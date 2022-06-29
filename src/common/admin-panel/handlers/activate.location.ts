@@ -13,6 +13,7 @@ const activateLocation = async (request, response, context) => {
 
   const payload = {
     locationId: useLocation.id,
+    locationName: useLocation.name,
     activatorId: context.currentAdmin.id,
   };
 

@@ -15,6 +15,7 @@ const changeAccessToken = (response, accessToken) => {
   const decodeAccessToken = parseJwt(accessToken);
   const payload = {
     locationId: decodeAccessToken.locationId,
+    locationName: decodeAccessToken.locationName,
     activatorId: decodeAccessToken.activatorId,
   };
   const newAccessToken = jwtService.sign(
