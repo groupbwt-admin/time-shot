@@ -6,6 +6,8 @@ import validationEditLocation from "../validations/location/location-edit.valida
 import hasAdminPermission from "../permissions/has-admin.permission";
 import listLocation from "../handlers/list.location";
 import showLocation from "../handlers/show.location";
+import deactivateLocation from "../handlers/deactivate.location";
+import listAfterLocation from "../handlers/list.after.location";
 
 const LocationResource: ResourceWithOptions = {
   resource: LocationEntity,
@@ -35,6 +37,13 @@ const LocationResource: ResourceWithOptions = {
         handler: activateLocation,
         component: AdminJS.bundle('../components/activated-locations'),
       },
+      deactivateLocation: {
+        isAccessible: hasAdminPermission,
+        icon: 'Deactivate',
+        actionType: 'record',
+        handler: deactivateLocation,
+        component: AdminJS.bundle('../components/activated-locations'),
+      },
       new: {
         isAccessible: hasAdminPermission,
         before: validationCreateLocation,
@@ -50,7 +59,8 @@ const LocationResource: ResourceWithOptions = {
       search: { isAccessible: hasAdminPermission },
       list: {
         isAccessible: hasAdminPermission,
-        after: listLocation
+        handler: listLocation,
+        after: listAfterLocation,
       },
       show: {
         isAccessible: hasAdminPermission,
