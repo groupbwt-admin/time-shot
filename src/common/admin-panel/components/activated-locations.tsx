@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { MessageBox } from '@adminjs/design-system';
 
 const Dashboard = (props) => {
+  const _message = props.record.message;
   const { logoutPath } = props.record;
   if (!logoutPath) {
     return null;
@@ -28,7 +29,7 @@ const Dashboard = (props) => {
     )
   }
   return (
-    <MessageBox message='Location is activated!' />
+    <MessageBox message={_message} />
   );
 };
 
