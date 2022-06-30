@@ -94,17 +94,11 @@ const TimeShotResource: ResourceWithOptions = {
                             }
                         });
                         if (timeShotEntity) {
-                            await transactionalEntityManager
-                                .createQueryBuilder()
-                                .update(TimeShotEntity)
-                                .set({
-                                    stop: () => "NOW()",
-                                    locationEnd: () => `"${jwtContent.locationId}"` // TODO:
-                                })
-                                .where({
-                                    id: timeShotEntity.id
-                                })
-                                .execute();
+                            await transactionalEntityManager.query(`
+                                UPDATE \`time_shots\`
+                                SET \`locationEndId\` = ?,\`stop\`= NOW()
+                                WHERE \`id\` = ?
+                            `, [jwtContent.locationId, timeShotEntity.id]);
                         }
                     });
                     return {};
