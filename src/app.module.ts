@@ -7,6 +7,8 @@ import { AuthModule } from './modules/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getTypeOrmModuleOptions } from './config/typeorm.config';
 import { CreateAccountCommand } from "./commands/create-account.command";
+import { StatisticService } from './services/statistic.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -16,10 +18,11 @@ import { CreateAccountCommand } from "./commands/create-account.command";
     }),
     TypeOrmModule.forRoot(getTypeOrmModuleOptions()),
     UsersModule,
-    AuthModule
+    AuthModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [AppController],
-  providers: [AppService, CreateAccountCommand]
+  providers: [AppService, CreateAccountCommand, StatisticService]
 })
 export class AppModule {
 }
