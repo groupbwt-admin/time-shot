@@ -30,7 +30,7 @@ export class UsersStatisticsEntity extends BaseEntity {
     @Index("ix_statistic_workTime")
     workTime: number;
 
-    @ApiProperty({ example: '2022-01-01', description: 'Work date.' })
+    @ApiProperty({ example: '2022-06-27', description: 'Work date.' })
     @Column({ type: 'date', nullable: false, select: true, update: false})
     @Index("ix_statistic_workDate")
     workDate: Date;
