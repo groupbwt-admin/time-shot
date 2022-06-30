@@ -21,8 +21,19 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         },
         dashboard: {
             component: AdminJS.bundle('components/time-tracker'),
-        }
+        },
+        locale: {
+            language: 'en',
+            translations: {
+                labels: {
+                    LocationEntity: 'Location',
+                    UserEntity: 'User',
+                    TimeShotEntity: 'TimeShot',
+                },
+            },
+        },
     });
+    AdminJS.bundle('components/logged-in', 'LoggedIn');
     const router = buildAdminRouter(adminJS);
     app.use(adminJS.options.rootPath, router);
 }
