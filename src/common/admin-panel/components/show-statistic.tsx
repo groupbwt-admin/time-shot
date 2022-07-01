@@ -1,10 +1,9 @@
 import React from 'react';
 import { useRecord } from 'adminjs';
 
-const showStatistic = (props, some) => {
-    console.log(some)
-    const { record: initialRecord, resource } = props
-    const { record } = useRecord(initialRecord, resource.id)
+const showStatistic = (props) => {
+    const { record: initialRecord, resource } = props;
+    const { record } = useRecord(initialRecord, resource.id);
 
     const resultsItems = record.results.map((record, index) =>
         <tr style={{width: '100%', height: '30px', border: '1px solid', textAlign: 'center'}}>
