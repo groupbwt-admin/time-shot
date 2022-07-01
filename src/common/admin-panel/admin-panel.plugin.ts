@@ -30,7 +30,8 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
                 labels: {
                     LocationEntity: 'Location',
                     UserEntity: 'User',
-                    TimeShotEntity: 'TimeShot',
+                    TimeShotEntity: 'Time Shot',
+                    UsersStatisticsEntity: 'User Statistic'
                 },
             },
         },
