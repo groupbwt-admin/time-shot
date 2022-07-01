@@ -9,6 +9,11 @@ import { jwtConstants } from "../../constants/jwt-constants";
 const TimeShotResource: ResourceWithOptions = {
     resource: TimeShotEntity,
     options: {
+        navigation: {
+            icon: "Time",
+            name: null,
+        },
+        
         actions: {
             getWorkingTimeShot: {
                 handler: async (request, response, context) => {
