@@ -34,7 +34,7 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
                     loginWelcome: 'Time Shot',
                     UserEntity: 'Users',
                     LocationEntity: 'Locations',
-                    TimeShotEntity: 'Tracking'
+                    TimeShotEntity: 'Time Tracking'
                 }
             }
         }        
