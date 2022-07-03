@@ -57,23 +57,7 @@ const UsersStatisticResource: ResourceWithOptions = {
                 }
             },
             edit: {
-                isAccessible: hasAdminPermission,
-                before: async (request, context) => {
-                    if (request.method === 'post') {
-                        const [ hours, minutes, seconds ] = request.payload.workTime.split(':');
-                        request.payload.workTime = Number(hours) * 3600 + Number(minutes) * 60 + Number(seconds)
-                    }
-
-                    return request;
-                },
-                after: async (originalResponse, request, context) => {
-                    if (request.method === 'get') {
-                        const responseDate = new Date(Date.UTC(0, 0, 0, 0, 0, originalResponse.record.params.workTime));
-                        originalResponse.record.params.workTime = responseDate.toUTCString().substring(17, 25);
-                    }
-                    
-                    return originalResponse;
-                }
+                isAccessible: false
             },
             list: {
                 before: async (request, context) => {
