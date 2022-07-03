@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from "@nestjs/config";
 import { AppController } from './controllers/app.controller';
+import { StatisticsController } from './controllers/statistics.controller';
 import { AppService } from './services/app.service';
 import { UsersModule } from './modules/users.module';
 import { AuthModule } from './modules/auth.module';
@@ -21,7 +22,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     ScheduleModule.forRoot()
   ],
-  controllers: [AppController],
+  controllers: [AppController, StatisticsController],
   providers: [AppService, CreateAccountCommand, StatisticService]
 })
 export class AppModule {
