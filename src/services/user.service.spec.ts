@@ -1,7 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Role } from "../common/enums/role.enum";
-import getHashPassword from "../common/utils/get-hashed-password";
 import { UserEntity } from "../database/entities/user.entity";
 import { UserService } from "./user.service";
 
@@ -40,7 +39,7 @@ describe('UserService', () => {
         expect(await service.create(dto)).toEqual({
             email: 'user@user.com',
             password: 'user',
-            hashedPassword: await getHashPassword('user'),
+            hashedPassword: expect.any(String),
             role: Role.USER
         });
     });
