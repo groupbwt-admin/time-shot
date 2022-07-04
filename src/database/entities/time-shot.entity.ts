@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm';
 import { UserEntity } from "./user.entity";
 import { LocationEntity } from "./location.entity";
 import { ApiProperty } from "@nestjs/swagger";
@@ -8,10 +8,10 @@ export class TimeShotEntity extends BaseEntity {
     @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'UUID.' })
     @PrimaryGeneratedColumn("uuid")
     id: string;
-
-    @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'UUID.' })
-    @ManyToOne(() => UserEntity, user => user.timeShots, { nullable: false })
-    @JoinColumn({ name: "userId" })
+    
+    @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'User UUID.' })
+    @ManyToOne(() => UserEntity, { nullable: false })
+    @RelationId((statistic: TimeShotEntity) => statistic.user)
     user: UserEntity;
 
     @ApiProperty({ example: '123e4567-e89b-12d3-a456-426614174000', description: 'UUID.' })

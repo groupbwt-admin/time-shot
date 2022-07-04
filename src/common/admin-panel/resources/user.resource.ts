@@ -1,4 +1,4 @@
-import { ResourceWithOptions } from "adminjs"
+import { ResourceWithOptions } from "adminjs";
 import canGrantPermission from "../permissions/user.permission";
 import hasAdminPermission from "../permissions/has-admin.permission";
 import { UserEntity } from "database/entities/user.entity";
@@ -7,16 +7,20 @@ import getHashPassword from "../../utils/get-hashed-password";
 const UserResource: ResourceWithOptions = {
     resource: UserEntity,
     options: {
+        navigation: {
+            icon: "Events",
+            name: null
+        },
         properties: {
             hashedPassword: {
-                isVisible: false,
+                isVisible: false
             },
             password: {
-                type: 'string',
+                type: "string",
                 isVisible: {
-                    list: false, edit: true, filter: false, show: false,
-                },
-            },
+                    list: false, edit: true, filter: false, show: false
+                }
+            }
         },
         actions: {
             edit: {
@@ -25,10 +29,10 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await getHashPassword(request.payload.password),
-                        }
+                            hashedPassword: await getHashPassword(request.payload.password)
+                        };
                     }
-                    return request
+                    return request;
                 },
             },
             new: {
@@ -37,21 +41,29 @@ const UserResource: ResourceWithOptions = {
                     if (request.payload.password) {
                         request.payload = {
                             ...request.payload,
-                            hashedPassword: await getHashPassword(request.payload.password),
-                        }
+                            hashedPassword: await getHashPassword(request.payload.password)
+                        };
                     }
-                    return request
+                    return request;
                 },
             },
             delete: {
-                isAccessible: canGrantPermission,
+                isAccessible: canGrantPermission
             },
-            show: { isAccessible: hasAdminPermission },
-            list: { isAccessible: hasAdminPermission },
-            bulkDelete: { isAccessible: hasAdminPermission },
-            search: { isAccessible: hasAdminPermission }
+            show: {
+                isAccessible: hasAdminPermission
+            },
+            list: {
+                isAccessible: hasAdminPermission
+            },
+            bulkDelete: {
+                isAccessible: hasAdminPermission
+            },
+            search: {
+                isAccessible: hasAdminPermission
+            }
         }
-    },
+    }
 };
 
 export default UserResource;

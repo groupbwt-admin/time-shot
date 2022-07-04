@@ -1,10 +1,11 @@
+import AdminJS from "adminjs";
 import { Database, Resource } from "@adminjs/typeorm";
 import { INestApplication } from "@nestjs/common";
 import buildAdminRouter from "./admin.router";
 import UserResource from "./resources/user.resource";
 import LocationResource from "./resources/location.resource";
 import TimeShotResource from "./resources/time-shot.resource";
-import AdminJS from "adminjs";
+import UsersStatisticResource from "./resources/user-statistic.resource"
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
     AdminJS.registerAdapter({ Database, Resource });
@@ -13,7 +14,8 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         resources: [
             UserResource,
             LocationResource,
-            TimeShotResource
+            TimeShotResource,
+            UsersStatisticResource
         ],
         rootPath: '/admin',
         branding: {
@@ -28,7 +30,8 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
                 labels: {
                     LocationEntity: 'Location',
                     UserEntity: 'User',
-                    TimeShotEntity: 'TimeShot',
+                    TimeShotEntity: 'Time Shot',
+                    UsersStatisticsEntity: 'User Statistic'
                 },
             },
         },
