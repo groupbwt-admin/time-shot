@@ -1,8 +1,7 @@
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { jwtConstants } from '../common/constants/jwt-constants';
 import { UserEntity } from '../database/entities/user.entity';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
@@ -92,7 +91,6 @@ describe('validateUser', () => {
 });
 
 describe('validateLogin', () => {
-  const jwtService = new JwtService();
   let service: AuthService;
 
   const mockUsers = [{
