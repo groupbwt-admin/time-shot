@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import getHashPassword from '../common/utils/get-hashed-password';
+import * as bcrypt from 'bcrypt';
 import { UserService } from './user.service';
 import { LoginUserDto } from '../common/dtos/login-user.dto';
 
@@ -9,15 +9,14 @@ export class AuthService {
     public logger = new Logger('AuthService');
 
     constructor(
-        private usersService: UserService,
-        private jwtService: JwtService
+        private readonly usersService: UserService,
+        private readonly jwtService: JwtService
     ) {
     }
 
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.usersService.findOneByEmail(email);
-        const currentHashedPassword = await getHashPassword(password);
-        if (user && user.hashedPassword === currentHashedPassword) {
+        if (user && await bcrypt.compare(password, user.hashedPassword)) {
             const { email, ...result } = user;
             return result;
         }
