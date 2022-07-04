@@ -1,6 +1,6 @@
-import * as bcrypt from 'bcrypt';
 import UserCreateValidator from '../../validations/user/user-create.validation';
-import { Role } from '../../../enums/role.enum';
+import { Role } from 'common/enums/role.enum';
+import getHashPassword from 'common/utils/get-hashed-password';
 
 
 const newBeforeUser = async (request, context) => {
@@ -12,9 +12,7 @@ const newBeforeUser = async (request, context) => {
     }
     request.payload = {
         ...request.payload,
-        hashedPassword: await bcrypt.hash(
-            request.payload.password, process.env.SECRET_KEY
-        ),
+        hashedPassword: await getHashPassword(request.payload.password)
     }
     return request;
 };
