@@ -78,7 +78,7 @@ const UserResource: ResourceWithOptions = {
             },
             bulkDelete: { isAccessible: false }
         }
-    },
+    }
 };
 
 export default UserResource;
