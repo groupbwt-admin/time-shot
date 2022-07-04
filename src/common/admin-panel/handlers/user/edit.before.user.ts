@@ -5,8 +5,6 @@ import getHashPassword from 'common/utils/get-hashed-password';
 
 
 const editBeforeUser = async (request, context) => {
-  const isAccessible = canModifyUser(context);
-  request.payload.email = null;
   if (request.payload.password) {
       UserCreateValidator.validatePassword(request.payload.password, request.payload.duplicatePassword);
       request.payload = {
@@ -16,9 +14,6 @@ const editBeforeUser = async (request, context) => {
   }
   if (request.payload.role) {
       UserUpdateValidator.validateRole(context.currentAdmin.role, request.payload.id, context.currentAdmin.id);
-  }
-  if (request.payload.deletedAt) {
-      request.payload.deletedAt = isAccessible ? new Date() : null;
   }
   return request;
 };
