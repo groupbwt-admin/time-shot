@@ -40,9 +40,9 @@ const showTotalStatistic = async (request, response, context) => {
         return {
             contentCustomer: "admin",
             meta: {
-                totalByPeriod: convertSecoundsToHours(records[0].totalByPeriod),
+                totalByPeriod: records.length ? convertSecoundsToHours(records[0].totalByPeriod) : "00:00:00",
                 usersCount: results.length,
-                averageByUser: convertSecoundsToHours(records[0].totalByPeriod/results.length)
+                averageByUser: records.length ? convertSecoundsToHours(records[0].totalByPeriod/results.length) : "--:--:--"
             },
             records: results
         };
@@ -52,9 +52,9 @@ const showTotalStatistic = async (request, response, context) => {
         return {
             contentCustomer: "user",
             meta: {
-                totalByPeriod: convertSecoundsToHours(filteredRecords[0].userWorkTime),
+                totalByPeriod: filteredRecords.length ? convertSecoundsToHours(filteredRecords[0].userWorkTime) : "00:00:00",
                 usersCount: 1,
-                averageByUser: "-"
+                averageByUser: "--:--:--"
             },
             records: filteredRecords
         };
