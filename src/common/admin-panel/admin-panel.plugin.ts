@@ -6,6 +6,7 @@ import UserResource from "./resources/user.resource";
 import LocationResource from "./resources/location.resource";
 import TimeShotResource from "./resources/time-shot.resource";
 import UsersStatisticResource from "./resources/user-statistic.resource"
+import showTotalStatistic from "./handlers/show-total-statistic.handler";
 
 export async function setupAdminPanel(app: INestApplication): Promise<void> {
     AdminJS.registerAdapter({ Database, Resource });
@@ -38,9 +39,15 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
                     LocationEntity: 'Locations',
                     TimeShotEntity: 'Time Tracking',
                     UsersStatisticsEntity: 'User Statistic'
-                }
-            }
-        }        
+                },
+            },
+        },
+        pages: {
+            'Admin Statistic': {
+                component: AdminJS.bundle('components/admin-statistic'),
+                handler: showTotalStatistic
+            }   
+        }
     });
     AdminJS.bundle('components/logged-in', 'LoggedIn');
     const router = buildAdminRouter(adminJS);
