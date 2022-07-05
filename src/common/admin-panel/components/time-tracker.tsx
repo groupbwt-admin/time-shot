@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Box, Label } from '@adminjs/design-system';
 import { ApiClient } from "adminjs";
 import TimeCounter from "./time-counter";
-import { TimeShotEntity } from "../../../database/entities/time-shot.entity";
-
 
 const api = new ApiClient();
 
