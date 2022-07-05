@@ -96,6 +96,30 @@ describe('UserController (e2e)', () => {
       });
   });
 
+  it('/api/users/my_profile (GET) with authorization', async () => {
+    const { text } = await request(app.getHttpServer())
+      .post('/api/auth/login')
+      .send({ email: 'user@user.com', password: 'user' })
+      .set('Accept', 'application/json');
+
+    const { access_token } = JSON.parse(text);
+    return request(app.getHttpServer())
+      .get('/api/users/my_profile')
+      .set('Authorization', `Bearer ${access_token}`)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then(response => {
+        expect(JSON.parse(response.text)).toEqual(
+          {
+            id: '2116ce44-f5e2-11ec-9b36-b42e999e335c',
+            email: 'user@user.com',
+            hashedPassword: '$2b$10$dfasdsdqwdqwdasdasd/yeAsC92cOK37eQ63omTOol00Du7yWUFQy',
+            role: 'superadmin',
+          },
+        )
+      });
+  });
+
   afterAll(async () => {
     await app.close();
   });
