@@ -11,13 +11,13 @@ const adminStatistic = (props) => {
     const [isHide, setStatus] = useState(true);
     let records: Array<{userWorkTime: number, userEmail: string}> = [];
     let meta: {
-        totalByPeriod: number,
+        totalByPeriod: string,
         usersCount: number
-        averageByUser: number
+        averageByUser: string
     } = {
-        totalByPeriod: 0,
+        totalByPeriod: "00:00:00",
         usersCount: 0,
-        averageByUser: 0
+        averageByUser: "--:--:--"
     };
     const baseResult = {contentCustomer: "", meta: meta, records: records}
     const [fetchResult, setFetchResult] = useState(baseResult);
@@ -68,7 +68,9 @@ const adminStatistic = (props) => {
         <br></br>
         <Table>
             <TableHead>
-                <TableCell>Index</TableCell>
+                { 
+                    fetchResult.records.length ? <TableCell>Index</TableCell> : null 
+                }
                 {   fetchResult.records.length ?
                     Object.keys(fetchResult.records[0]).map(cellName => (
                         <TableCell>{cellName.toLocaleUpperCase()}</TableCell>
@@ -115,7 +117,7 @@ const adminStatistic = (props) => {
             </div>
             
             <div style={{display: (isHide ? 'none' : 'block')}}>
-                {fetchResult?.records.length ? <Box>{metaComponent}</Box> : <Placeholder style={{ width: 400, height: 14 }} />}
+                {fetchResult?.contentCustomer.length ? <Box>{metaComponent}</Box> : <Placeholder style={{ width: 900, height: 20 }} />}
             </div>
 
             <Button style={{display: (isHide ? 'none' : 'block')}} onClick={setBaseResult}>Show hiden</Button>
