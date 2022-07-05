@@ -20,7 +20,9 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         ],
         rootPath: '/admin',
         branding: {
-            companyName: 'GroupBWT'
+            companyName: 'GroupBWT',
+            softwareBrothers: false,
+            logo: false
         },
         dashboard: {
             component: AdminJS.bundle('components/time-tracker'),
@@ -28,10 +30,14 @@ export async function setupAdminPanel(app: INestApplication): Promise<void> {
         locale: {
             language: 'en',
             translations: {
+                messages: {
+                    loginWelcome: 'Tracking time by location'
+                },
                 labels: {
-                    LocationEntity: 'Location',
-                    UserEntity: 'User',
-                    TimeShotEntity: 'Time Shot',
+                    loginWelcome: 'Time Shot',
+                    UserEntity: 'Users',
+                    LocationEntity: 'Locations',
+                    TimeShotEntity: 'Time Tracking',
                     UsersStatisticsEntity: 'User Statistic'
                 },
             },
