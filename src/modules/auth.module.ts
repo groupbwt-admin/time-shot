@@ -10,6 +10,7 @@ import { UsersModule } from './users.module';
 
 @Module({
     imports: [
+        ConfigModule.forRoot(),
         PassportModule.register({ 'defaultStrategy': process.env.DEFAULT_STRATEGY }),
         JwtModule.register({
             secret: jwtConstants.secret,
